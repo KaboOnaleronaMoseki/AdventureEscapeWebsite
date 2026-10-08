@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Destinations | Adventure Escape SA</title>
+    <meta
+      name="description"
+      content="Explore the Western Cape landscapes where Adventure Escape SA's guided outdoor adventures take place."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
+          <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <span class="brand-name">Adventure Escape SA</span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html" class="is-active" aria-current="page">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Customer Login</a></li>
+            <li><a class="nav-cta" href="fees.html">Book Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero" style="--hero-image: url('images/coastal.png')">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-current="page"> &rarr; Destinations</span>
+          </nav>
+          <h1>Explore the Western Cape</h1>
+          <p>
+            From open water to rugged trails, discover the kinds of landscapes that make each
+            guided escape memorable.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="destinations-title">
+        <div class="container">
+          <div class="section-center">
+            <p class="section-eyebrow">Find your setting</p>
+            <h2 class="section-title" id="destinations-title">A new view for every adventure</h2>
+            <p class="section-intro">
+              Adventure locations and conditions depend on the activity, season, and weather.
+              Contact our team to confirm the meeting point and travel details for your date.
+            </p>
+          </div>
+
+          <div class="summary-grid">
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/coastal1.png" alt="Coastal landscape beside the ocean" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Coastline &amp; sheltered bays</h3>
+                <p>
+                  Breath in the fresh ocean air while kayaking or taking coastal routes.
+                  Your guide will select an appropriate launch point depending on the situation.
+                </p>
+                <a class="card-link" href="activities.html">Explore water activities &rarr;</a>
+              </div>
+            </article>
+
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/summit.png" alt="Mountain scenery on a Western Cape trail" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Mountain trails &amp; fynbos</h3>
+                <p>
+                 Take guided tours through unique scenic areas with a predetermined speed and degree of difficulty.
+                </p>
+                <a class="card-link" href="activities.html">Explore hiking &rarr;</a>
+              </div>
+            </article>
+
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/waterzip.png" alt="Outdoor adventure course among trees" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Forest &amp; canopy</h3>
+                <p>
+                 Experience the thrill of adventure through our elevated outdoor course amid greenery along with guidance and safety instructions.
+                </p>
+                <a class="card-link" href="activities.html">Explore ziplining &rarr;</a>
+              </div>
+            </article>
+
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/rock-climbing1.png" alt="Rock climbing on a rugged cliff face" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Cliffs &amp; rugged terrain</h3>
+                <p>
+                 Challenge yourself on a guided climb with routes and requirements suited to the activity and group.
+                </p>
+                <a class="card-link" href="activities.html">Explore rock climbing &rarr;</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" aria-labelledby="destination-planning-title">
+        <div class="container section-center">
+          <h2 class="section-title" id="destination-planning-title">Planning your visit?</h2>
+          <p class="section-intro">
+            Location, access, and transportation will be different depending on your reservation. Please contact us prior to your departure to get current information.
+          </p>
+          <a class="btn btn-primary" href="contact.html">Ask about locations</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <div>
+            <span class="brand-name">Adventure Escape SA</span>
+            <p>Guided outdoor adventures and eco-tourism across the Western Cape, South Africa.</p>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact Details</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="login.html">Customer Login</a></li>
+          </ul>
+        </div>
+        <p class="footer-copy">
+          &copy; <span id="year">2024</span> Adventure Escape SA. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <script src="js/main.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Login | Adventure Escape SA</title>
+    <meta
+      name="description"
+      content="Customer account sign-in information for Adventure Escape SA bookings."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
+          <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <span class="brand-name">Adventure Escape SA</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+
+        <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a class="is-active" href="login.html" aria-current="page">Customer Login</a></li>
+            <li><a class="nav-cta" href="fees.html">Book Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero" style="--hero-image: url('images/team-campfire.png')">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-current="page"> &rarr; Customer Login</span>
+          </nav>
+          <h1>Welcome back, adventurer</h1>
+          <p>Find your way back to your next great escape.</p>
+        </div>
+      </section>
+
+      <section class="section section-alt login-section" aria-labelledby="login-title">
+        <div class="container login-layout">
+          <div class="login-card">
+            <p class="section-eyebrow">Customer portal preview</p>
+            <h2 class="section-title" id="login-title">Sign in to your account</h2>
+            <p class="login-intro">
+              A future customer portal could help you review booking requests and keep your
+              adventure details together.
+            </p>
+
+            <div class="login-demo-notice" role="note">
+              <strong>Demo only:</strong> Sign-in is not connected to an account system. Do not
+              enter a real password; this page does not send or save credentials.
+            </div>
+
+            <form class="login-form" id="loginForm">
+              <div class="form-group">
+                <label for="loginEmail">Email address</label>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  name="email"
+                  autocomplete="username"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <div class="login-password-field">
+                  <input
+                    type="password"
+                    id="loginPassword"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Enter a demo password"
+                    required
+                  />
+                  <button
+                    class="password-toggle"
+                    id="passwordToggle"
+                    type="button"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    Show
+                  </button>
+                </div>
+              </div>
+
+              <div class="login-links">
+                <a href="mailto:hello@adventureescapesa.co.za?subject=Customer%20account%20access">
+                  Forgot password?
+                </a>
+              </div>
+
+              <button class="btn btn-primary btn-block login-submit" type="submit">
+                Sign in
+              </button>
+              <p class="login-status" id="loginStatus" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="login-register">
+              Need an account?
+              <a href="contact.html#contactForm">Contact our team to get started</a>.
+            </p>
+          </div>
+
+          <aside class="login-aside">
+            <p class="section-eyebrow">Your adventure, all together</p>
+            <h2>What a customer account could offer</h2>
+            <ul class="login-benefits">
+              <li>Review the status of your booking requests.</li>
+              <li>Keep your activity and accommodation details handy.</li>
+              <li>Contact our team if your plans change.</li>
+            </ul>
+            <a class="btn btn-ghost" href="fees.html">Plan a booking</a>
+            <p class="login-aside-note">
+              These portal features are ideas for a future version and are not available through
+              this demo sign-in.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <div>
+            <span class="brand-name">Adventure Escape SA</span>
+            <p>Guided outdoor adventures and eco-tourism across the Western Cape, South Africa.</p>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="login.html" aria-current="page">Customer Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact Details</a></li>
+            <li><a href="mailto:hello@adventureescapesa.co.za">hello@adventureescapesa.co.za</a></li>
+            <li><a href="tel:+27210000000">+27 21 000 0000</a></li>
+          </ul>
+        </div>
+        <p class="footer-copy">
+          &copy; <span id="year">2024</span> Adventure Escape SA. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+    <script src="js/login.js" defer></script>
+  </body>
+</html>

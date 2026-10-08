@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-background">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities | Adventure Escape SA</title>
+    <meta
+      name="description"
+      content="Explore our four signature guided outdoor activities: kayaking, ziplining, rock climbing, and team challenges in the Western Cape."
+    />
+
+    <!-- Google Fonts: Barlow Condensed for headings, Manrope for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- ============================ Header ============================ -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
+          <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <span class="brand-name">Adventure Escape SA</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+
+        <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a class="is-active" href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Customer Login</a></li>
+            <li><a class="nav-cta" href="fees.html">Book Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================ Hero ============================ -->
+      <section class="page-hero" style="--hero-image: url('images/hero-landscape.png')">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-current="page"> &rarr; Activities</span>
+          </nav>
+          <h1>Our Activities</h1>
+          <p>
+            Choose from four professionally guided adventures designed to excite, challenge, and
+            inspire. Each activity is beginner-friendly and led by certified guides.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================== Activities Grid ==================== -->
+      <section class="section" aria-labelledby="activities-title">
+        <div class="container">
+          <div class="section-center">
+            <p class="section-eyebrow">Pick Your Adventure</p>
+            <h2 class="section-title" id="activities-title">Nine Ways to Escape the Ordinary</h2>
+          </div>
+
+          <div class="summary-grid">
+            <!-- ===== 1. Kayaking ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/kayaking1.png" alt="Kayaking on a pristine Western Cape bay" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Kayaking</h3>
+                <p>
+                  Paddle through glassy bays and explore hidden coves along the Western Cape's
+                  most spectacular coastline. Perfect for all experience levels.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Water-based</li>
+                  <li class="tag">3–4 hours</li>
+                  <li class="tag">All ages</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R450 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#kayaking-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 2. Ziplining ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/Ziplining2.png" alt="Ziplining through forest canopy" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Ziplining</h3>
+                <p>
+                  Soar through forest canopies on thrilling zip lines while taking in panoramic
+                  views. An exhilarating experience you'll never forget.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Adrenaline</li>
+                  <li class="tag">2–3 hours</li>
+                  <li class="tag">Age 8+</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R550 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#ziplining-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 3. Rock Climbing ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/rock-climbing1.png" alt="Rock climbing on coastal cliffs" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Rock Climbing</h3>
+                <p>
+                  Challenge yourself on stunning coastal cliff faces with professional belaying,
+                  safety equipment, and expert instruction every step of the way.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Sport climbing</li>
+                  <li class="tag">3–4 hours</li>
+                  <li class="tag">Age 12+</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R600 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#climbing-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 4. Team Challenges ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/Group-design.png" alt="Team-building challenges" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Team Challenges</h3>
+                <p>
+                  Build trust and communication through engaging, outdoor group activities. Perfect
+                  for corporate events, families, and friend groups.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Teamwork</li>
+                  <li class="tag">2–4 hours</li>
+                  <li class="tag">Any size</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R400 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#team-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 5. Coastal Hiking & Fynbos Trail ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/coastal-trail.png" alt="Hikers walking along a rocky coastal trail" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Coastal Hiking &amp; Trail</h3>
+                <p>
+                  Trek scenic clifftop trails through indigenous fynbos flora with panoramic
+                  ocean vistas and expert naturalist guiding.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Nature Trail</li>
+                  <li class="tag">2–3 hours</li>
+                  <li class="tag">All ages</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R350 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#hiking-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 6. Marine Snorkel Safari ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/water-adventure.png" alt="Group preparing for a water adventure on a boat" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Marine Snorkel Safari</h3>
+                <p>
+                  Explore vibrant marine life and calm tidal kelp forests in protected coastal
+                  coves with certified dive guides and gear included.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Marine Safari</li>
+                  <li class="tag">2–3 hours</li>
+                  <li class="tag">Age 8+</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R500 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#snorkeling-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 7. Stand-Up Paddleboarding (SUP) ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/paddleboarding-sunset.png" alt="Paddleboarders enjoying the ocean at sunset" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Stand-Up Paddleboarding (SUP)</h3>
+                <p>
+                  Glide peacefully across calm coastal lagoons and sheltered estuaries with
+                  stable touring boards and introductory coaching.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Water sport</li>
+                  <li class="tag">2 hours</li>
+                  <li class="tag">All ages</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R380 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#sup-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 8. Fat Bike Dune & Beach Trail ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/fat-bike-dunes.png" alt="Fat-bike riders exploring coastal sand dunes" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Fat Bike Dune Trail</h3>
+                <p>
+                  Cruise effortlessly over rolling white sand dunes and along hard-packed beach
+                  shorelines on premium balloon-tire fat bikes.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Biking</li>
+                  <li class="tag">2–3 hours</li>
+                  <li class="tag">Age 10+</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R460 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#fatbike-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+
+            <!-- ===== 9. Caving & Coastal Grottoes ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/caving-adventure.png" alt="Illuminated cave passage with limestone formations" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Caving &amp; Grotto Exploration</h3>
+                <p>
+                  Venture into ancient sea-carved limestone caverns and tidal caves with
+                  headlamps, helmets, and expert speleology guides.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Exploration</li>
+                  <li class="tag">3 hours</li>
+                  <li class="tag">Age 10+</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">R520 <small>per person</small></div>
+                </div>
+                <a class="card-link" href="#caving-detail">Learn more &rarr;</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== Detailed Activity Information ==================== -->
+      <section class="section section-alt" aria-labelledby="detail-title">
+        <div class="container">
+          <h2 class="section-title" id="detail-title">Activity Details</h2>
+
+          <!-- ===== 1. KAYAKING DETAIL ===== -->
+          <div id="kayaking-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/kayaking1.png" alt="Kayaking adventure" class="detail-hero-img" />
+              <h2>Kayaking on the Western Cape</h2>
+              <p>
+                Experience the magic of paddling through crystal-clear bays with professional
+                guides who know every hidden cove, reef, and scenic spot. Our kayaking adventures
+                are designed for all experience levels and take you into some of the most
+                breathtaking coastal environments in South Africa.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Professional guide with 3+ years of experience</li>
+                <li>Premium kayak and paddle</li>
+                <li>Personal flotation device (PFD)</li>
+                <li>Safety briefing and instruction</li>
+                <li>Water and light snacks</li>
+                <li>Waterproof bag for personal items</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>3–4 hours (including briefing)</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–8 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Beginner to Intermediate</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>6+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Physical Fitness</td>
+                    <td>Moderate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R450 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">3–4 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">6 Years</span></li>
+                <li><span class="k">Fitness</span><span class="v">Moderate</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 2. ZIPLINING DETAIL ===== -->
+          <div id="ziplining-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/Ziplining2.png" alt="Ziplining adventure" class="detail-hero-img" />
+              <h2>Ziplining through the Forest Canopy</h2>
+              <p>
+                Feel the rush of soaring through a lush forest canopy on professionally maintained
+                zip lines. This thrilling activity combines adrenaline with stunning natural
+                scenery, offering aerial views you can only experience from above.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Professional certified zipline guides</li>
+                <li>Complete harness, helmet, and safety gear</li>
+                <li>6–8 zip line runs and suspension bridges</li>
+                <li>Safety briefing and harness checks</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2–3 hours (including briefing)</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>4–12 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Intermediate</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>8+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Weight Limit</td>
+                    <td>Up to 120 kg</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R550 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2–3 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">8 Years</span></li>
+                <li><span class="k">Adrenaline</span><span class="v">High</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 3. ROCK CLIMBING DETAIL ===== -->
+          <div id="climbing-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/rock-climbing1.png" alt="Rock climbing adventure" class="detail-hero-img" />
+              <h2>Rock Climbing on Coastal Cliffs</h2>
+              <p>
+                Scale dramatic coastal cliffs while belayed by expert guides using the latest
+                climbing equipment and safety protocols. Whether you're a complete beginner or
+                experienced climber, our routes provide an incredible sense of achievement.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Certified SAMCT / FGASA climbing guides</li>
+                <li>Climbing shoes, harness, ropes, and helmets</li>
+                <li>Multiple routes tailored to your fitness</li>
+                <li>Full belaying and safety support</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>3–4 hours (including instruction)</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–4 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Beginner to Advanced</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>12+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Physical Fitness</td>
+                    <td>High (strength &amp; endurance)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R600 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">3–4 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">12 Years</span></li>
+                <li><span class="k">Fitness</span><span class="v">High</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 4. TEAM CHALLENGES DETAIL ===== -->
+          <div id="team-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/Group-design.png" alt="Team challenges" class="detail-hero-img" />
+              <h2>Team Challenges &amp; Group Adventures</h2>
+              <p>
+                Strengthen team bonds through carefully designed outdoor challenges that promote
+                communication, trust, and creative problem-solving. Perfect for corporate groups,
+                family reunions, or friend groups.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Professional facilitator and props</li>
+                <li>4–6 customized problem-solving challenges</li>
+                <li>Full safety gear and debrief session</li>
+                <li>Refreshments and hydration station</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2–4 hours (customizable)</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>6+ people (scalable)</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Customizable</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>All ages welcome</td>
+                  </tr>
+                  <tr>
+                    <td>Focus</td>
+                    <td>Teamwork &amp; Communication</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R400 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2–4 Hours</span></li>
+                <li><span class="k">Min. Group</span><span class="v">6 People</span></li>
+                <li><span class="k">Focus</span><span class="v">Teamwork</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 5. COASTAL HIKING DETAIL ===== -->
+          <div id="hiking-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/coastal-trail.png" alt="Hikers walking along a rocky coastal trail" class="detail-hero-img" />
+              <h2>Coastal Hiking &amp; Fynbos Trail</h2>
+              <p>
+                Immerse yourself in the world-renowned Cape Floral Kingdom with a guided hike along
+                dramatic ocean cliffs and scenic mountain paths. Learn about indigenous botanical
+                medicines and secret sea caves.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Certified FGASA trail guide</li>
+                <li>Botanical &amp; ecological interpretations</li>
+                <li>Trekking poles and daypacks</li>
+                <li>Trail snacks, energy bars, and mineral water</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2–3 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–10 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Easy to Moderate</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>All ages</td>
+                  </tr>
+                  <tr>
+                    <td>Terrain</td>
+                    <td>Clifftop &amp; Fynbos Nature Trail</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R350 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2–3 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">All Ages</span></li>
+                <li><span class="k">Fitness</span><span class="v">Light/Moderate</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 6. MARINE SNORKEL SAFARI DETAIL ===== -->
+          <div id="snorkeling-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/water-adventure.png" alt="Group preparing for a water adventure on a boat" class="detail-hero-img" />
+              <h2>Marine Snorkel Safari</h2>
+              <p>
+                Dive beneath the surface into a magical underwater world. Swim through golden kelp
+                forests and crystal-clear tidal coves, encountering friendly Cape fur seals,
+                octopuses, and colorful fish species.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Certified divemaster / marine guide</li>
+                <li>Full wetsuit, mask, snorkel, and fins</li>
+                <li>Safety buoy and in-water supervision</li>
+                <li>Hot drinks &amp; post-dive snacks</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2–3 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–6 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Beginner Friendly</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>8+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Prerequisites</td>
+                    <td>Basic swimming ability</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R500 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2–3 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">8 Years</span></li>
+                <li><span class="k">Gear</span><span class="v">Included</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 7. STAND-UP PADDLEBOARDING (SUP) DETAIL ===== -->
+          <div id="sup-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/paddleboarding-sunset.png" alt="Paddleboarders enjoying the ocean at sunset" class="detail-hero-img" />
+              <h2>Stand-Up Paddleboarding (SUP)</h2>
+              <p>
+                Experience the calm and serenity of gliding across protected coastal lagoons and
+                river mouths. A fun, relaxing, and core-strengthening activity that allows you to
+                take in the scenic Western Cape mountains from the water.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Premium inflatable / epoxy touring SUP board &amp; paddle</li>
+                <li>Personal flotation device (PFD) and safety leash</li>
+                <li>Introductory balance &amp; paddling technique lesson</li>
+                <li>Complimentary photos taken by your guide</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–8 people per instructor</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Easy / Beginner Friendly</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>All ages welcome</td>
+                  </tr>
+                  <tr>
+                    <td>Location</td>
+                    <td>Calm Coastal Lagoon &amp; Estuary</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R380 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">All Ages</span></li>
+                <li><span class="k">Difficulty</span><span class="v">Easy</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 8. FAT BIKE DUNE & BEACH TRAIL DETAIL ===== -->
+          <div id="fatbike-detail" class="detail-layout" style="margin-bottom: 3.5rem">
+            <div class="detail-main">
+              <img src="images/fat-bike-dunes.png" alt="Fat-bike riders exploring coastal sand dunes" class="detail-hero-img" />
+              <h2>Fat Bike Dune &amp; Beach Trail</h2>
+              <p>
+                Ride specialized oversized-tire fat bikes effortlessly along untouched beach lines,
+                coastal tracks, and sand dunes. Feel the coastal breeze and cover scenic miles
+                without getting bogged down in soft sand.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Premium multi-gear fat bike and fitted helmet</li>
+                <li>Experienced trail leader and mechanic support</li>
+                <li>Tide-timed beach and dune riding route</li>
+                <li>Hydration backpack and energy snack</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>2–3 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–8 riders per leader</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Moderate</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>10+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Surface</td>
+                    <td>Sand Dunes &amp; Packed Beach</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R460 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">2–3 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">10 Years</span></li>
+                <li><span class="k">Surface</span><span class="v">Sand &amp; Trail</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+
+          <!-- ===== 9. CAVING & GROTTO EXPLORATION DETAIL ===== -->
+          <div id="caving-detail" class="detail-layout">
+            <div class="detail-main">
+              <img src="images/caving-adventure.png" alt="Illuminated cave passage with limestone formations" class="detail-hero-img" />
+              <h2>Caving &amp; Coastal Grotto Exploration</h2>
+              <p>
+                Step back in time as you explore ancient subterranean limestone caverns and sea
+                grottos carved by ocean tides over millennia. Discover stalactites, hidden chambers,
+                and unique coastal geology with certified speleology guides.
+              </p>
+
+              <h3>What's Included</h3>
+              <ul class="checklist">
+                <li>Specialist speleology and cave guide</li>
+                <li>Caving helmet and high-powered LED headlamp</li>
+                <li>Knee pads, gloves, and protective gear</li>
+                <li>Full cave safety briefing and navigation support</li>
+              </ul>
+
+              <h3>Important Information</h3>
+              <table class="fees-table">
+                <thead>
+                  <tr>
+                    <th>Detail</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duration</td>
+                    <td>3 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Group Size</td>
+                    <td>2–6 people per guide</td>
+                  </tr>
+                  <tr>
+                    <td>Difficulty</td>
+                    <td>Moderate (some crawling &amp; walking)</td>
+                  </tr>
+                  <tr>
+                    <td>Age Requirement</td>
+                    <td>10+ years old</td>
+                  </tr>
+                  <tr>
+                    <td>Gear Provided</td>
+                    <td>Helmet, LED Headlamp, Knee Pads</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="detail-aside">
+              <div class="price-tag">R520 <small>per person</small></div>
+              <ul class="fact-rows">
+                <li><span class="k">Duration</span><span class="v">3 Hours</span></li>
+                <li><span class="k">Min. Age</span><span class="v">10 Years</span></li>
+                <li><span class="k">Adventure</span><span class="v">Underground</span></li>
+              </ul>
+              <a class="btn btn-primary btn-block" href="fees.html">Add to Booking</a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CTA Band ==================== -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-band">
+            <h2>Ready to book your adventure?</h2>
+            <p>
+              Build a custom booking, mix and match activities, and see your total with instant
+              discounts up to 15%.
+            </p>
+            <a class="btn btn-primary" href="fees.html">Start Your Booking</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================ Footer ============================ -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <div>
+            <span class="brand-name">Adventure Escape SA</span>
+            <p>Guided outdoor adventures and eco-tourism across the Western Cape, South Africa.</p>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact Details</a></li>
+            <li><a href="mailto:hello@adventureescapesa.co.za">hello@adventureescapesa.co.za</a></li>
+            <li><a href="tel:+27210000000">+27 21 000 0000</a></li>
+          </ul>
+        </div>
+        <p class="footer-copy">
+          &copy; <span id="year">2024</span> Adventure Escape SA. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>

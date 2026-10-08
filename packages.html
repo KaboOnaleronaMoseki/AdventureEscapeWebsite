@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-background">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventure Packages | Adventure Escape SA</title>
+    <meta
+      name="description"
+      content="Explore curated adventure packages combining multiple activities with special discounts for groups and families."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- ============================ Header ============================ -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
+          <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <span class="brand-name">Adventure Escape SA</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+
+        <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a class="is-active" href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Customer Login</a></li>
+            <li><a class="nav-cta" href="fees.html">Book Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================ Hero ============================ -->
+      <section class="page-hero" style="--hero-image: url('images/hero-landscape.png')">
+        <div class="container">
+          
+          <h1>Adventure Packages</h1>
+          <p>
+            Bundle any of our nine guided activities into an incredible day or multi-day escape
+            and save up to 15% with packages designed for every type of adventurer.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================== How Packages Work ==================== -->
+      <section class="section" aria-labelledby="packages-intro-title">
+        <div class="container">
+          <div class="section-center">
+            <h2 class="section-title" id="packages-intro-title">Build your own package or choose a preset</h2>
+            <p class="section-intro">
+              Our packages offer kayaking, ziplining, rock climbing, team-building activities, hiking, snorkeling, paddleboarding, 
+              fat-bike trails, and caving, along with discounted pricing based on the number of bookings you make. 
+              Choose from the following combinations of activities through our cost calculator or packages.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card feature-card-poster">
+              <img src="images/5%discount.png" alt="2 Activities - 5% Discount" />
+            </article>
+
+            <article class="feature-card feature-card-poster">
+              <img src="images/10%discount.png" alt="3 Activities - 10% Discount" />
+            </article>
+
+            <article class="feature-card feature-card-poster">
+              <img src="images/15%discount.png" alt="4+ Activities - 15% Discount" />
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== Preset Packages ==================== -->
+      <section class="section section-alt" aria-labelledby="preset-packages-title">
+        <div class="container">
+          <div class="section-center">
+            <h2 class="section-title" id="preset-packages-title">Choose a preset package</h2>
+            <p class="section-intro">
+              These carefully curated combinations are designed to deliver the ultimate Western Cape
+              adventure experience.
+            </p>
+          </div>
+
+          <div class="summary-grid cols-2">
+            <!-- ===== Coastal Explorer ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/summit.png" alt="Coastal Explorer Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Coastal Explorer</h3>
+                <p>
+                  Experience the Western Cape from water and air. Kayak through pristine bays,
+                  explore marine life, then soar through forest canopies on thrilling zip lines.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">Kayaking</li>
+                    <li class="tag">Marine Snorkel Safari</li>
+                    <li class="tag">Ziplining</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R950 <small>total per person (saves R50)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ===== Summit Challenge ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images\coastal.png" alt="Summit Challenge Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Summit Challenge</h3>
+                <p>
+                  For thrill-seekers. Climb coastal cliffs, zip line through the canopy, and
+                  explore a limestone grotto on one unforgettable day.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">Rock Climbing</li>
+                    <li class="tag">Ziplining</li>
+                    <li class="tag">Caving</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R1,100 <small>total per person (saves R50)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ===== Surf & Cliff Expedition ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images\Surf & Cliff Expedition.png" alt="Surf and Cliff Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Surf &amp; Cliff Expedition</h3>
+                <p>
+                  Conquer the ocean and the heights. Paddle glassy ocean bays in the morning
+                  and scale dramatic coastal rock faces in the afternoon.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">Kayaking</li>
+                    <li class="tag">Rock Climbing</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R1,000 <small>total per person (saves R50)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ===== Water & Sky Adrenaline ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images\waterzip.png" alt="Water and Sky Adrenaline Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Water &amp; Sky Adrenaline</h3>
+                <p>
+                  The multi-thrill combo. Paddle scenic bays, fly across tree-top zip lines,
+                  climb ocean-view cliff routes, and finish with a coastal hike.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">Kayaking</li>
+                    <li class="tag">Ziplining</li>
+                    <li class="tag">Rock Climbing</li>
+                    <li class="tag">Coastal Hiking</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R1,440 <small>total per person (saves R160)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ===== Team Adventure Quest ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/Group-design.png" alt="Team Adventure Quest Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Team Adventure Quest</h3>
+                <p>
+                  Combine active sea kayaking with fun, outdoor team-building challenges
+                  designed to foster trust, leadership, and laughs.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">Kayaking</li>
+                    <li class="tag">Team Challenges</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R805 <small>total per person (saves R45)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ===== Ultimate Escape (Full Activities) ===== -->
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/fullactivities.png" alt="Ultimate Escape Full Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Ultimate Escape (All-in-One)</h3>
+                <p>
+                  The complete Western Cape outdoor experience. Enjoy all nine activities,
+                  from kayaking and snorkelling to caving, fat-bike trails, and team challenges.
+                </p>
+                <div style="margin-top: auto;">
+                  <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0.5rem 0;">
+                    <strong>Includes:</strong>
+                  </p>
+                  <ul class="tag-list">
+                    <li class="tag">All 9 Activities</li>
+                  </ul>
+                  <div class="experience-meta">
+                    <div class="price-tag">R1,700 <small>total per person (saves R300)</small></div>
+                  </div>
+                  <a class="card-link" href="fees.html">Add to booking &rarr;</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== Group Packages Perfect for teams and families ==================== -->
+      <section class="section" aria-labelledby="group-packages-title">
+        <div class="container">
+          <div class="section-center">
+            <h1 class="section-eyebrow">Group Adventures</h1>
+            <h2 class="section-title" id="group-packages-title">Perfect for teams and families</h2>
+            <p class="section-intro">
+              Whether you're planning a corporate retreat, family reunion, or friend getaway, we
+              offer flexible packages customized to your group's size and interests.
+            </p>
+          </div>
+
+          <div class="summary-grid">
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images/Group-design.png" alt="Family Adventure Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Family Adventure</h3>
+                <p>
+                  Perfect for families with mixed ages. Includes beginner-friendly activities
+                  designed to keep everyone engaged and safe.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Mixed Ages</li>
+                  <li class="tag">6+ People</li>
+                  <li class="tag">Customizable</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">Custom <small>pricing on request</small></div>
+                </div>
+                <a class="card-link" href="contact.html">Inquire &rarr;</a>
+              </div>
+            </article>
+
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images\Corporate-Retreat.png" alt="Corporate Retreat Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Corporate Retreat</h3>
+                <p>
+                  Build team cohesion through carefully facilitated outdoor challenges, activities,
+                  and team-building experiences tailored to your goals.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Team Building</li>
+                  <li class="tag">10–50+ People</li>
+                  <li class="tag">Fully Tailored</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">Custom <small>pricing on request</small></div>
+                </div>
+                <a class="card-link" href="contact.html">Inquire &rarr;</a>
+              </div>
+            </article>
+
+            <article class="experience-card">
+              <div class="experience-card-media">
+                <img src="images\Custom-Group-Adventure.png" alt="Custom Group Package" />
+              </div>
+              <div class="experience-card-body">
+                <h3>Custom Group Adventure</h3>
+                <p>
+                  Tell us your vision, group size, and preferences. We'll design a completely
+                  bespoke adventure tailored to your unique needs.
+                </p>
+                <ul class="tag-list">
+                  <li class="tag">Any Size</li>
+                  <li class="tag">Any Duration</li>
+                  <li class="tag">Fully Custom</li>
+                </ul>
+                <div class="experience-meta">
+                  <div class="price-tag">Custom <small>pricing on request</small></div>
+                </div>
+                <a class="card-link" href="contact.html">Inquire &rarr;</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== FAQ About Packages ==================== -->
+      <section class="section section-alt" aria-labelledby="faq-title">
+        <div class="container">
+          <div class="section-center">
+            <h2 class="section-title" id="faq-title">Package Questions</h2>
+          </div>
+
+          <div class="detail-layout" style="gap: 3rem;">
+            <div class="detail-main">
+              <h3>Can I mix and match activities?</h3>
+              <p>
+                Absolutely! Use our fee calculator to build your own perfect combination. Mix
+                kayaking, ziplining, rock climbing, and team challenges in any way you like.
+              </p>
+
+              <h3>Do discounts apply automatically?</h3>
+              <p>
+                Yes. When you add multiple activities to your booking, our system automatically
+                calculates the tiered discount (5% for 2 activities, 10% for 3, and 15% for 4+).
+              </p>
+
+              <h3>Are group discounts available?</h3>
+              <p>
+                For groups of 8 or more people, special pricing and customization options may be
+                available. Please contact us directly to discuss your group's specific needs.
+              </p>
+
+              <h3>Can we customize a package?</h3>
+              <p>
+                Yes! If none of our preset packages perfectly match your vision, our team can
+                design a completely custom package tailored to your group's interests, fitness
+                levels, and budget.
+              </p>
+
+              <h3>What if someone in our group can't do one of the activities?</h3>
+              <p>
+                No problem. We're flexible! Let us know during booking and we can adjust your
+                package. Participants can pursue different activities on the same day if needed.
+              </p>
+            </div>
+
+            <aside class="detail-aside">
+              <h3 style="margin-top: 0;">Ready to book a package?</h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Start by building your own combination on our fees calculator, or contact us to
+                discuss a custom package for your group.
+              </p>
+              <a class="btn btn-primary btn-block" href="fees.html">Build Your Package</a>
+              <a class="btn btn-ghost btn-block" href="contact.html">Contact for Groups</a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CTA Band ==================== -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-band">
+            <h2>Start planning your package today</h2>
+            <p>
+              Build your adventure, mix and match activities, and see your total instantly with
+              our real-time discount calculator.
+            </p>
+            <a class="btn btn-primary" href="fees.html">Go to Fees Calculator</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================ Footer ============================ -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <div>
+            <span class="brand-name">Adventure Escape SA</span>
+            <p>Guided outdoor adventures and eco-tourism across the Western Cape, South Africa.</p>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact Details</a></li>
+            <li><a href="mailto:hello@adventureescapesa.co.za">hello@adventureescapesa.co.za</a></li>
+            <li><a href="tel:+27210000000">+27 21 000 0000</a></li>
+          </ul>
+        </div>
+        <p class="footer-copy">
+          &copy; <span id="year">2024</span> Adventure Escape SA. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+  </body>
+</html>
