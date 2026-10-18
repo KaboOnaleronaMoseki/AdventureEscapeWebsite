@@ -326,8 +326,28 @@ form?.addEventListener("submit", async (event) => {
       : {})
   };
 
-  const apiUrl =
-    document.querySelector('meta[name="booking-api-url"]')?.content.trim() || "/bookings";
+  const apiUrl = document
+    .querySelector('meta[name="booking-api-url"]')
+    ?.content.trim();
+  if (!apiUrl) {
+    setMessage(
+      "Online booking is not configured on this website. Please try again once the booking service is connected.",
+      true
+    );
+    return;
+  }
+  try {
+    const parsedApiUrl = new URL(apiUrl);
+    if (parsedApiUrl.protocol !== "https:" && parsedApiUrl.hostname !== "localhost") {
+      throw new Error("The booking API must use HTTPS.");
+    }
+  } catch {
+    setMessage(
+      "Online booking is not configured correctly. Please contact us for assistance.",
+      true
+    );
+    return;
+  }
   submitButton.disabled = true;
   submitButton.textContent = "Sending request…";
   setMessage("");

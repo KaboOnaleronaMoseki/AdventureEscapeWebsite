@@ -11,11 +11,10 @@ and distinct-activity discount tiers as the app. It validates dates in the Afric
 timezone, enforces the 24-hour activity cutoff and accommodation date range, and submits requests
 to the Expo booking API.
 
-By default the form posts to `/bookings`, which requires the API to be served from the same origin.
-For Render deployment, `render.yaml` builds this site with the API origin supplied through the
-`BOOKING_API_URL` environment variable and writes the correct API endpoints into the generated
-`fees.html` and `account.html`. The API must allow this site's origin when hosted on a different
-domain.
+The booking form requires an explicit HTTPS booking API URL; it does not POST to the static website
+host. For Render deployment, `render.yaml` builds this site with the API origin supplied through
+the `BOOKING_API_URL` environment variable and writes the correct API endpoints into generated
+`fees.html` and `account.html`. The API must allow this site's origin.
 Static hosting alone cannot store or confirm bookings; the API performs authoritative validation,
 availability checks, and email notification.
 
