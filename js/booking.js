@@ -1,7 +1,10 @@
-// booking.js - Interactive Fee Calculator & Booking Logic
-// Calculates activity pricing, multi-activity discounts, and accommodation stays.
+const BOOKING_TIME_ZONE = "Africa/Johannesburg";
+const PAST_DATE_MESSAGE =
+  "Past dates cannot be booked. Please select today or a future date.";
+const ACTIVITY_CUTOFF_MESSAGE =
+  "This activity must be booked at least 24 hours in advance. Please choose a later date or time.";
+const CHECKOUT_DATE_MESSAGE = "Check-out must be at least one day after check-in.";
 
-// 1. List of outdoor activities we offer
 const activities = [
   { id: "kayaking", name: "Kayaking", price: 450 },
   { id: "ziplining", name: "Ziplining", price: 550 },
@@ -14,7 +17,6 @@ const activities = [
   { id: "caving", name: "Caving & Grotto Exploration", price: 520 }
 ];
 
-// 2. List of accommodation options
 const accommodations = [
   { id: "cabins", name: "Coastal Eco-Cabins", price: 1250, unit: "per cabin / night" },
   { id: "glamping", name: "Canopy Glamping Tents", price: 850, unit: "per tent / night" },
@@ -22,197 +24,374 @@ const accommodations = [
   { id: "camp", name: "Seaside Camp & Backpackers", price: 350, unit: "per person / night" }
 ];
 
-// HTML elements
 const pickerList = document.getElementById("pickerList");
 const accommodationPickerList = document.getElementById("accommodationPickerList");
 const form = document.getElementById("bookingForm");
 const message = document.getElementById("bookingMessage");
+const submitButton = document.getElementById("submitBooking");
+const activityDateInput = document.getElementById("activityDate");
+const activityTimeInput = document.getElementById("activityTime");
+const checkInDateInput = document.getElementById("checkInDate");
+const checkOutDateInput = document.getElementById("checkOutDate");
 
-// Track quantities for activities and accommodations
-const activityQuantities = {};
-activities.forEach((act) => {
-  activityQuantities[act.id] = 0;
-});
+try {
+  const savedProfile = JSON.parse(
+    sessionStorage.getItem("adventure-escape-client-profile") || "null"
+  );
+  if (savedProfile) {
+    document.getElementById("fullName").value = savedProfile.fullName || "";
+    document.getElementById("email").value = savedProfile.email || "";
+    document.getElementById("phone").value = savedProfile.phone || "";
+  }
+} catch {
+  // Session storage can be unavailable in restricted browser contexts.
+}
 
-const accommodationQuantities = {};
-accommodations.forEach((acc) => {
-  accommodationQuantities[acc.id] = 0;
-});
+const activityQuantities = Object.fromEntries(activities.map(({ id }) => [id, 0]));
+const accommodationQuantities = Object.fromEntries(accommodations.map(({ id }) => [id, 0]));
 
-// Format money as South African Rand (e.g., R1,250)
 function formatMoney(amount) {
-  return "R" + amount.toLocaleString("en-ZA");
+  return `R${amount.toLocaleString("en-ZA")}`;
 }
 
-// Tiered multi-activity discount
-function getDiscount(totalActivities) {
-  if (totalActivities >= 4) return 15; /// 4+ activities = 15% discount
-  if (totalActivities === 3) return 10; // 3 activities = 10% discount
-  if (totalActivities === 2) return 5;  // 2 activities = 5% discount
-  return 0;                             // 0 or 1 activity = 0%
+function todayInSouthAfrica() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: BOOKING_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+  const fields = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return `${fields.year}-${fields.month}-${fields.day}`;
 }
 
-// Create a picker row with plus / minus counter
+function addDays(date, count) {
+  const value = new Date(`${date}T00:00:00Z`);
+  value.setUTCDate(value.getUTCDate() + count);
+  return value.toISOString().slice(0, 10);
+}
+
+function formatSouthAfricanDate(value) {
+  if (!value) return "Not selected";
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return "Not selected";
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: BOOKING_TIME_ZONE,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+}
+
+function updateDateDisplays() {
+  document.getElementById("formattedActivityDate").textContent =
+    formatSouthAfricanDate(activityDateInput.value);
+  document.getElementById("formattedCheckInDate").textContent =
+    formatSouthAfricanDate(checkInDateInput.value);
+  document.getElementById("formattedCheckOutDate").textContent =
+    formatSouthAfricanDate(checkOutDateInput.value);
+}
+
+function setMessage(text, isError = false) {
+  if (!message) return;
+  message.textContent = text;
+  message.classList.toggle("is-error", isError);
+  message.classList.toggle("is-success", Boolean(text) && !isError);
+}
+
 function createPickerRow(item, isAccommodation) {
   const row = document.createElement("li");
   row.className = "picker-row";
 
-  // Item description
   const info = document.createElement("div");
   info.className = "picker-info";
-  const unitText = isAccommodation ? item.unit : "per person";
   info.innerHTML =
-    '<span class="picker-name">' + item.name + '</span>' +
-    '<span class="picker-price">' + formatMoney(item.price) + ' (' + unitText + ')</span>';
+    `<span class="picker-name">${item.name}</span>` +
+    `<span class="picker-price">${formatMoney(item.price)} (${isAccommodation ? item.unit : "per person"})</span>`;
 
-  // Quantity controls (+ / -)
-  const qtyDiv = document.createElement("div");
-  qtyDiv.className = "qty";
+  const controls = document.createElement("div");
+  controls.className = "qty";
 
-  const minusBtn = document.createElement("button");
-  minusBtn.type = "button";
-  minusBtn.textContent = "−";
+  const minus = document.createElement("button");
+  minus.type = "button";
+  minus.textContent = "−";
+  minus.setAttribute("aria-label", `Remove one ${item.name}`);
 
-  const qtyOutput = document.createElement("output");
-  qtyOutput.textContent = "0";
+  const output = document.createElement("output");
+  output.textContent = "0";
+  output.setAttribute("aria-label", `${item.name} quantity`);
 
-  const plusBtn = document.createElement("button");
-  plusBtn.type = "button";
-  plusBtn.textContent = "+";
+  const plus = document.createElement("button");
+  plus.type = "button";
+  plus.textContent = "+";
+  plus.setAttribute("aria-label", `Add one ${item.name}`);
 
-  function updateQuantity(change) {
-    if (isAccommodation) {
-      accommodationQuantities[item.id] = Math.max(0, accommodationQuantities[item.id] + change);
-      qtyOutput.textContent = accommodationQuantities[item.id];
-    } else {
-      activityQuantities[item.id] = Math.max(0, activityQuantities[item.id] + change);
-      qtyOutput.textContent = activityQuantities[item.id];
-    }
+  const quantities = isAccommodation ? accommodationQuantities : activityQuantities;
+  function adjust(change) {
+    quantities[item.id] = Math.max(0, quantities[item.id] + change);
+    output.textContent = String(quantities[item.id]);
+    setMessage("");
     updateSummary();
   }
 
-  minusBtn.addEventListener("click", function () {
-    updateQuantity(-1);
-  });
-
-  plusBtn.addEventListener("click", function () {
-    updateQuantity(1);
-  });
-
-  qtyDiv.appendChild(minusBtn);
-  qtyDiv.appendChild(qtyOutput);
-  qtyDiv.appendChild(plusBtn);
-
-  row.appendChild(info);
-  row.appendChild(qtyDiv);
+  minus.addEventListener("click", () => adjust(-1));
+  plus.addEventListener("click", () => adjust(1));
+  controls.append(minus, output, plus);
+  row.append(info, controls);
   return row;
 }
 
-// Update the real-time order summary calculation
+function getPricing() {
+  const selectedActivityTypes = activities.filter(
+    ({ id }) => activityQuantities[id] > 0
+  ).length;
+  const totalActivities = activities.reduce(
+    (total, { id }) => total + activityQuantities[id],
+    0
+  );
+  const activitySubtotal = activities.reduce(
+    (total, { id, price }) => total + activityQuantities[id] * price,
+    0
+  );
+  const discountPercent =
+    selectedActivityTypes >= 4 ? 15 :
+      selectedActivityTypes === 3 ? 10 :
+        selectedActivityTypes === 2 ? 5 : 0;
+  const discountAmount = Math.round(activitySubtotal * discountPercent / 100);
+  const accommodationCount = accommodations.reduce(
+    (total, { id }) => total + accommodationQuantities[id],
+    0
+  );
+  const accommodationSubtotal = accommodations.reduce(
+    (total, { id, price }) => total + accommodationQuantities[id] * price,
+    0
+  );
+
+  return {
+    selectedActivityTypes,
+    totalActivities,
+    activitySubtotal,
+    discountPercent,
+    discountAmount,
+    accommodationCount,
+    accommodationSubtotal,
+    total: activitySubtotal - discountAmount + accommodationSubtotal
+  };
+}
+
+function selectedIds(items, quantities) {
+  return items.filter(({ id }) => quantities[id] > 0).map(({ id }) => id);
+}
+
+function getDateError() {
+  const today = todayInSouthAfrica();
+  const chosenActivities = selectedIds(activities, activityQuantities);
+  const chosenAccommodations = selectedIds(accommodations, accommodationQuantities);
+
+  if (chosenActivities.length) {
+    if (!activityDateInput.value || !activityTimeInput.value) {
+      return "Select a valid activity date and time.";
+    }
+    if (activityDateInput.value < today) return PAST_DATE_MESSAGE;
+    const activityTime = new Date(`${activityDateInput.value}T${activityTimeInput.value}:00+02:00`);
+    if (Number.isNaN(activityTime.getTime())) return "Select a valid activity date and time.";
+    if (activityTime.getTime() - Date.now() < 24 * 60 * 60 * 1000) {
+      return ACTIVITY_CUTOFF_MESSAGE;
+    }
+  }
+
+  if (chosenAccommodations.length) {
+    if (!checkInDateInput.value) return "Select a valid check-in date.";
+    if (checkInDateInput.value < today) return PAST_DATE_MESSAGE;
+    if (!checkOutDateInput.value || checkOutDateInput.value <= checkInDateInput.value) {
+      return CHECKOUT_DATE_MESSAGE;
+    }
+  }
+
+  return "";
+}
+
 function updateSummary() {
-  let totalActivities = 0;
-  let activitySubtotal = 0;
-
-  activities.forEach((act) => {
-    const count = activityQuantities[act.id];
-    totalActivities += count;
-    activitySubtotal += count * act.price;
-  });
-
-  // Calculate activity discount
-  const discountPercent = getDiscount(totalActivities);
-  const discountAmount = Math.round((activitySubtotal * discountPercent) / 100);
-  const discountedActivityTotal = activitySubtotal - discountAmount;
-
-  // Calculate accommodation totals
-  let totalAccomStays = 0;
-  let accomSubtotal = 0;
-
-  accommodations.forEach((acc) => {
-    const count = accommodationQuantities[acc.id];
-    totalAccomStays += count;
-    accomSubtotal += count * acc.price;
-  });
-
-  // Grand total
-  const grandTotal = discountedActivityTotal + accomSubtotal;
-
-  // Update summary UI
-  const elBookings = document.getElementById("summaryBookings");
-  const elSubtotal = document.getElementById("summarySubtotal");
-  const elDiscount = document.getElementById("summaryDiscount");
-  const elAccomNights = document.getElementById("summaryAccomNights");
-  const elAccomTotal = document.getElementById("summaryAccomTotal");
-  const elTotal = document.getElementById("summaryTotal");
-
-  if (elBookings) elBookings.textContent = totalActivities;
-  if (elSubtotal) elSubtotal.textContent = formatMoney(activitySubtotal);
-  if (elDiscount) elDiscount.textContent = formatMoney(discountAmount) + " (" + discountPercent + "%)";
-  if (elAccomNights) elAccomNights.textContent = totalAccomStays;
-  if (elAccomTotal) elAccomTotal.textContent = formatMoney(accomSubtotal);
-  if (elTotal) elTotal.textContent = formatMoney(grandTotal);
+  const summary = getPricing();
+  document.getElementById("summaryBookings").textContent = summary.totalActivities;
+  document.getElementById("summaryActivityTypes").textContent = summary.selectedActivityTypes;
+  document.getElementById("summarySubtotal").textContent = formatMoney(summary.activitySubtotal);
+  document.getElementById("summaryDiscount").textContent =
+    `${formatMoney(summary.discountAmount)} (${summary.discountPercent}%)`;
+  document.getElementById("summaryAccomNights").textContent = summary.accommodationCount;
+  document.getElementById("summaryAccomTotal").textContent =
+    formatMoney(summary.accommodationSubtotal);
+  document.getElementById("summaryTotal").textContent = formatMoney(summary.total);
+  updateFormState();
 }
 
-// Render activities into #pickerList
+function updateFormState(showDateError = false, clearError = false) {
+  if (!form || !submitButton) return;
+  const today = todayInSouthAfrica();
+  activityDateInput.min = today;
+  checkInDateInput.min = today;
+  checkOutDateInput.min =
+    checkInDateInput.value >= today
+      ? addDays(checkInDateInput.value, 1)
+      : today;
+  const hasSelection =
+    Object.values(activityQuantities).some((count) => count > 0) ||
+    Object.values(accommodationQuantities).some((count) => count > 0);
+  const dateError = getDateError();
+  const isValid =
+    form.checkValidity() &&
+    document.getElementById("fullName").value.trim().length > 0 &&
+    hasSelection &&
+    !dateError;
+  submitButton.disabled = !isValid;
+
+  if (showDateError && dateError) setMessage(dateError, true);
+  else if (clearError && message?.classList.contains("is-error")) setMessage("");
+}
+
+function resetQuantities() {
+  for (const quantities of [activityQuantities, accommodationQuantities]) {
+    for (const id of Object.keys(quantities)) quantities[id] = 0;
+  }
+  document.querySelectorAll(".qty output").forEach((output) => {
+    output.textContent = "0";
+  });
+}
+
 if (pickerList) {
-  activities.forEach((act) => {
-    pickerList.appendChild(createPickerRow(act, false));
-  });
+  activities.forEach((activity) => pickerList.append(createPickerRow(activity, false)));
 }
-
-// Render accommodations into #accommodationPickerList
 if (accommodationPickerList) {
-  accommodations.forEach((acc) => {
-    accommodationPickerList.appendChild(createPickerRow(acc, true));
-  });
+  accommodations.forEach((stay) => accommodationPickerList.append(createPickerRow(stay, true)));
 }
 
-// Initial calculation
+updateFormState();
+
+form?.addEventListener("input", () => {
+  updateDateDisplays();
+  updateFormState(true, true);
+});
+form?.addEventListener("change", () => {
+  updateDateDisplays();
+  updateFormState(true, true);
+});
+updateDateDisplays();
 updateSummary();
 
-// Handle booking reservation submission
-if (form) {
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  updateFormState(true);
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
 
-    const totalActivities = Object.values(activityQuantities).reduce((a, b) => a + b, 0);
-    const totalAccom = Object.values(accommodationQuantities).reduce((a, b) => a + b, 0);
+  const activityIds = selectedIds(activities, activityQuantities);
+  const accommodationIds = selectedIds(accommodations, accommodationQuantities);
+  const dateError = getDateError();
+  if (!activityIds.length && !accommodationIds.length) {
+    setMessage("Please select at least one activity or accommodation.", true);
+    return;
+  }
+  if (dateError) {
+    setMessage(dateError, true);
+    return;
+  }
 
-    const name = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const date = document.getElementById("preferredDate").value;
+  const requestBody = {
+    customerName: document.getElementById("fullName").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    notes: document.getElementById("notes").value.trim(),
+    ...(activityIds.length
+      ? {
+          activityIds,
+          activityQuantities: Object.fromEntries(
+            activityIds.map((id) => [id, activityQuantities[id]])
+          )
+        }
+      : {}),
+    ...(activityIds.length
+      ? { activityDateTime: `${activityDateInput.value}T${activityTimeInput.value}` }
+      : {}),
+    ...(accommodationIds.length
+      ? {
+          accommodationIds,
+          accommodationQuantities: Object.fromEntries(
+            accommodationIds.map((id) => [id, accommodationQuantities[id]])
+          ),
+          checkInDate: checkInDateInput.value,
+          checkOutDate: checkOutDateInput.value
+        }
+      : {})
+  };
 
-    if (!name || !email || !date) {
-      if (message) {
-        message.textContent = "Please fill in all required fields.";
-        message.style.color = "var(--indian-yellow)";
-      }
+  const apiUrl =
+    document.querySelector('meta[name="booking-api-url"]')?.content.trim() || "/bookings";
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending request…";
+  setMessage("");
+
+  try {
+    const sessionToken = sessionStorage.getItem("adventure-escape-client-session");
+    let response;
+    try {
+      response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {})
+        },
+        body: JSON.stringify(requestBody)
+      });
+    } catch {
+      setMessage(
+        "We could not reach the booking service. Please try again when the online booking service is available.",
+        true
+      );
       return;
     }
 
-    if (totalActivities === 0 && totalAccom === 0) {
-      if (message) {
-        message.textContent = "Please select at least one activity or accommodation.";
-        message.style.color = "var(--indian-yellow)";
-      }
+    let body;
+    try {
+      body = await response.json();
+    } catch {
+      setMessage("The booking service returned an invalid response. Please try again.", true);
+      return;
+    }
+    if (!body || typeof body !== "object") {
+      setMessage("The booking service returned an invalid response. Please try again.", true);
       return;
     }
 
-    if (message) {
-      message.textContent = "Thank you, " + name + "! Your booking reservation request has been received.";
-      message.style.color = "var(--white)";
+    if (!response.ok) {
+      setMessage(
+        body.errors?.[0]?.message || body.error ||
+          "The booking could not be accepted. Please review your dates and try again.",
+        true
+      );
+      return;
+    }
+    if (response.status !== 201 || body.booking?.status !== "pending") {
+      setMessage("The booking service could not confirm your reservation request. Please try again.", true);
+      return;
     }
 
+    const reference = body.booking.id ? ` Reference: ${body.booking.id}.` : "";
+    const serverTotal = body.booking.pricing?.total;
+    const price = typeof serverTotal === "number"
+      ? ` Estimated total: ${formatMoney(serverTotal)}.`
+      : "";
+    const emailStatus = body.emailNotification?.status === "sent"
+      ? " The team has been notified by email."
+      : " Its email notification is queued for delivery.";
+    setMessage(`Your reservation request is pending confirmation.${price}${emailStatus}${reference}`);
     form.reset();
-    activities.forEach((act) => {
-      activityQuantities[act.id] = 0;
-    });
-    accommodations.forEach((acc) => {
-      accommodationQuantities[acc.id] = 0;
-    });
-    document.querySelectorAll(".qty output").forEach((output) => {
-      output.textContent = "0";
-    });
+    resetQuantities();
+    updateDateDisplays();
     updateSummary();
-  });
-}
+  } finally {
+    submitButton.textContent = "Confirm & Reserve";
+    updateFormState();
+  }
+});

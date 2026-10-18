@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: adventure-escape-sa-website
+    runtime: static
+    buildCommand: node scripts/render-build.cjs
+    staticPublishPath: dist
+    envVars:
+      - key: BOOKING_API_URL
+        sync: false

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="same-origin" />
+    <meta name="account-api-url" content="" />
+    <title>Client Account | Adventure Escape SA</title>
+    <meta
+      name="description"
+      content="Create and verify your Adventure Escape SA customer account to make booking requests."
+    />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
+          <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <span class="brand-name">Adventure Escape SA</span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="safety.html">Safety</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="fees.html">Calculate Fees</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a class="is-active" href="account.html" aria-current="page">Client Account</a></li>
+            <li><a class="nav-cta" href="fees.html">Book Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero" style="--hero-image: url('images/hero-landscape.png')">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-current="page"> &rarr; Client Account</span>
+          </nav>
+          <h1>Your Adventure Escape account</h1>
+          <p>Create an account, verify your email, and use your saved contact details when booking.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container" style="max-width: 640px;">
+          <div class="booking-summary" id="accountPanel">
+            <div id="accountFormPanel">
+              <h2 class="section-title" id="accountHeading">Create your account</h2>
+              <p class="section-intro">
+                Create a free account to save your contact details and make booking requests easily.
+              </p>
+              <p id="accountNote" class="section-note" style="font-size:0.9em;color:#888;margin-bottom:1rem;"></p>
+              <form id="accountForm" novalidate>
+                <div class="form-group" id="nameGroup">
+                  <label for="fullName">Full name *</label>
+                  <input id="fullName" name="fullName" autocomplete="name" required maxlength="100" />
+                </div>
+                <div class="form-group" id="phoneGroup">
+                  <label for="phone">Phone number (optional)</label>
+                  <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email address *</label>
+                  <input id="email" name="email" type="email" autocomplete="email" required maxlength="254" />
+                </div>
+                <div class="form-group">
+                  <label for="password">Password *</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="12"
+                    maxlength="128"
+                    required
+                  />
+                  <small>Use 12–128 characters. Passwords are securely hashed and never emailed.</small>
+                </div>
+                <div id="accountMessage" class="booking-message" role="status" aria-live="polite"></div>
+                <button id="accountSubmit" type="submit" class="btn btn-primary btn-block">
+                  Create account
+                </button>
+              </form>
+              <div class="account-actions">
+                <button id="resendVerification" class="account-link" type="button" hidden>
+                  Resend verification email
+                </button>
+                <button id="switchMode" class="account-link" type="button">
+                  Already registered? Sign in
+                </button>
+              </div>
+            </div>
+            <div id="signedInPanel" hidden>
+              <h2 class="section-title">Your account</h2>
+              <p id="accountName" class="account-name"></p>
+              <p id="accountEmail"></p>
+              <p id="accountPhone"></p>
+              <p class="account-verified">Email verified</p>
+              <a class="btn btn-primary btn-block" href="fees.html">Make a booking request</a>
+              <button id="signOut" class="btn btn-ghost btn-block" type="button">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
+          <div>
+            <span class="brand-name">Adventure Escape SA</span>
+            <p>Guided outdoor adventures and eco-tourism across the Western Cape, South Africa.</p>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="accommodation.html">Accommodation</a></li>
+            <li><a href="fees.html">Booking fees</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact details</a></li>
+            <li><a href="account.html">Client account</a></li>
+          </ul>
+        </div>
+        <div class="footer-copy">&copy; <span id="year"></span> Adventure Escape SA</div>
+      </div>
+    </footer>
+    <script src="js/main.js" defer></script>
+    <script src="js/account.js" defer></script>
+  </body>
+</html>

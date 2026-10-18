@@ -1,25 +1,35 @@
-# Adventure Escape SA
+# Adventure Escape SA Website
 
-Adventure Escape SA includes the responsive HTML website and its Expo mobile app.
+This folder contains the responsive static website. Open `index.html` directly for browsing, or
+serve the folder with a web server. Its pages use the same dark brown, russet, and gold palette
+and system-font styling as the Expo app.
 
-## Website
+## Booking form
 
-Open `index.html` in a browser or serve this folder with a local static web server. The site has
-12 HTML pages, including the welcome screen, with shared responsive styling in `css/styles.css`.
+The booking calculator is on `fees.html`. It uses the same activity and accommodation IDs, prices,
+and distinct-activity discount tiers as the app. It validates dates in the Africa/Johannesburg
+timezone, enforces the 24-hour activity cutoff and accommodation date range, and submits requests
+to the Expo booking API.
 
-## Expo app
+By default the form posts to `/bookings`, which requires the API to be served from the same origin.
+For Render deployment, `render.yaml` builds this site with the API origin supplied through the
+`BOOKING_API_URL` environment variable and writes the correct API endpoints into the generated
+`fees.html` and `account.html`. The API must allow this site's origin when hosted on a different
+domain.
+Static hosting alone cannot store or confirm bookings; the API performs authoritative validation,
+availability checks, and email notification.
 
-The cross-platform Expo Router app is in `expo-app`.
+## Client accounts
 
-```powershell
-cd expo-app
-npm install
-npm run web
-```
+`account.html` provides email/password registration, sign-in, verification-link handling, and
+sign-out through the server API; it never stores passwords or creates a local account. Accounts
+require a verified email before sign-in. For a separate static-site origin, set
+the `account-api-url` meta tag in `account.html` to the deployed API origin and add the website
+origin to the server's `ALLOWED_ORIGINS`. `ACCOUNT_VERIFICATION_URL` on the server must point to
+this page. Signed-in booking requests are attached to the account after the server validates the
+session.
 
-Use `npm start` to launch the Expo development server for Android, iOS, or web. The app includes
-the site's main content pages and a grouped mega-menu navigation. Customer Login is a demo only;
-it does not authenticate users or send or store credentials.
-
-The installable Android APK is a generated build artifact and is not tracked in this repository.
-Build APKs with EAS using the `preview` profile in `expo-app/eas.json`.
+Create this Render Static Site from the website repository's `render.yaml`, set
+`BOOKING_API_URL` to the API's HTTPS origin, and deploy. Then configure `ALLOWED_ORIGINS` and
+`ACCOUNT_VERIFICATION_URL` in the API service using this site's deployed origin. The installable
+Android APK is built from the Expo app and is distributed separately.

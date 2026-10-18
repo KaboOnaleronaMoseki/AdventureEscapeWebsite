@@ -8,14 +8,9 @@
       name="description"
       content="Book your adventure with our interactive fees calculator. Mix and match activities and see your total instantly with discounts."
     />
+    <meta name="booking-api-url" content="" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
 
     <link rel="icon" type="image/png" href="images/logo.png" />
     <link rel="stylesheet" href="css/styles.css" />
@@ -53,7 +48,7 @@
             <li><a href="gallery.html">Gallery</a></li>
             <li><a class="is-active" href="fees.html">Calculate Fees</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a href="login.html">Customer Login</a></li>
+            <li><a href="account.html">Client Account</a></li>
             <li><a class="nav-cta" href="fees.html">Book Now</a></li>
           </ul>
         </nav>
@@ -71,7 +66,7 @@
           <h1>Booking & Pricing</h1>
           <p>
             Select your activities, watch the total update in real-time, and see how our tiered
-            discounts reward you for booking multiple adventures.
+            discounts reward you for choosing different activity types.
           </p>
         </div>
       </section>
@@ -94,7 +89,8 @@
                     1. Select Your Activities
                   </legend>
                   <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-                    Book 2+ activities for automatic multi-activity discounts (5%, 10%, 15%).
+                    Discounts are based on different activity types: 5% for 2, 10% for 3, and
+                    15% for 4 or more. Repeating one activity does not qualify.
                   </p>
 
                   <ul id="pickerList" class="picker-list"></ul>
@@ -138,13 +134,26 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="preferredDate">Preferred Date *</label>
-                      <input
-                        type="date"
-                        id="preferredDate"
-                        name="preferredDate"
-                        required
-                      />
+                      <label for="activityDate">Activity Date</label>
+                      <input type="date" id="activityDate" name="activityDate" />
+                      <small>Selected date: <output id="formattedActivityDate">Not selected</output>. Activities must be booked at least 24 hours ahead (South African time).</small>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="activityTime">Activity Start Time (South African time)</label>
+                      <input type="time" id="activityTime" name="activityTime" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="checkInDate">Check-in Date</label>
+                      <input type="date" id="checkInDate" name="checkInDate" />
+                      <small>Selected date: <output id="formattedCheckInDate">Not selected</output></small>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="checkOutDate">Check-out Date</label>
+                      <input type="date" id="checkOutDate" name="checkOutDate" />
+                      <small>Selected date: <output id="formattedCheckOutDate">Not selected</output>. Check-out must be at least one day after check-in.</small>
                     </div>
 
                     <div class="form-group">
@@ -168,8 +177,8 @@
                     </div>
                   </fieldset>
 
-                  <div id="bookingMessage" style="margin: 1.5rem 0; text-align: center; min-height: 1.5rem;"></div>
-                  <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+                  <div id="bookingMessage" class="booking-message" role="status" aria-live="polite"></div>
+                  <button id="submitBooking" type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;" disabled>
                     Confirm &amp; Reserve
                   </button>
                 </fieldset>
@@ -184,6 +193,10 @@
                 <div class="summary-row">
                   <span>Activities Selected:</span>
                   <strong id="summaryBookings">0</strong>
+                </div>
+                <div class="summary-row">
+                  <span>Different Activities:</span>
+                  <strong id="summaryActivityTypes">0</strong>
                 </div>
                 <div class="summary-row">
                   <span>Activities Subtotal:</span>
@@ -216,9 +229,9 @@
               <div style="background: rgba(var(--indian-yellow-rgb), 0.08); border-left: 3px solid var(--yellow); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.95rem;">
                 <p style="margin: 0 0 0.5rem; color: var(--yellow); font-weight: 600;">💡 Save with Multiple Activities</p>
                 <ul style="margin: 0; padding-left: 1.2rem; color: var(--text-muted);">
-                  <li>2 activities = 5% off activities</li>
-                  <li>3 activities = 10% off activities</li>
-                  <li>4+ activities = 15% off activities</li>
+                  <li>2 different activities = 5% off activity prices</li>
+                  <li>3 different activities = 10% off activity prices</li>
+                  <li>4+ different activities = 15% off activity prices</li>
                 </ul>
               </div>
             </aside>

@@ -9,6 +9,7 @@ expo-app/ios/
 
 # Generated Android package
 expo-app/*.apk
+/dist/
 
 # Local environment and logs
 .env
