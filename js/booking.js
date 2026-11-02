@@ -44,7 +44,7 @@ try {
     document.getElementById("phone").value = savedProfile.phone || "";
   }
 } catch {
-  // Session storage can be unavailable in restricted browser contexts.
+
 }
 
 const activityQuantities = Object.fromEntries(activities.map(({ id }) => [id, 0]));

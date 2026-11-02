@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Character encoding for standard text rendering -->
+    
     <meta charset="UTF-8" />
     
-    <!-- Responsive viewport setting for mobile, tablet, and desktop screens -->
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Page Title displayed on the browser tab -->
+    
     <title>Adventure Escape SA | Guided Outdoor Adventures</title>
     
-    <!-- Short summary of the page for search engines -->
+    
     <meta 
       name="description" 
       content="Adventure Escape SA offers guided kayaking, ziplining, rock climbing, and team challenges in the Western Cape." />
 
-    <!-- Website Favicon (small tab icon) -->
+    
     <link rel="icon" type="image/png" href="images/logo.png" />
 
-    <!-- Link to external CSS Stylesheet -->
+    
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <!-- ========================================================= -->
-    <!-- HEADER SECTION: Website Logo & Navigation Bar            -->
-    <!-- ========================================================= -->
+    
+    
+    
     <header class="site-header">
       <div class="container header-inner">
         
-        <!-- Logo and Company Name -->
+        
         <a class="brand" href="index.html">
           <img class="brand-logo" src="images/logo.png" alt="Adventure Escape SA Logo" />
           <span class="brand-name">Adventure Escape SA</span>
         </a>
 
-        <!-- Mobile Navigation Menu Toggle Button (Hamburger icon) -->
+        
         <button
           class="nav-toggle"
           id="navToggle"
@@ -47,12 +47,41 @@
           <span class="nav-toggle-bar"></span>
         </button>
 
-        <!-- Navigation Links -->
+        
         <nav class="primary-nav" id="primaryNav" aria-label="Primary">
           <ul>
             <li><a class="is-active" href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="activities.html">Activities</a></li>
+            <li class="mega-menu-item">
+              <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="megaMenuExplore">
+                Activities
+              </button>
+              <div class="mega-menu" id="megaMenuExplore">
+                <div class="mega-menu-grid">
+                  <div class="mega-column">
+                    <h3>Adventure Activities</h3>
+                    <a href="activities.html#kayaking-detail">Kayaking</a>
+                    <a href="activities.html#ziplining-detail">Ziplining</a>
+                    <a href="activities.html#climbing-detail">Rock Climbing</a>
+                    <a href="activities.html#team-detail">Team Challenges</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>More Ways to Explore</h3>
+                    <a href="activities.html#hiking-detail">Coastal Hiking</a>
+                    <a href="activities.html#snorkeling-detail">Snorkel Safari</a>
+                    <a href="activities.html#sup-detail">Paddleboarding</a>
+                    <a href="activities.html#fatbike-detail">Fat Bike Trail</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>Plan Your Escape</h3>
+                    <a href="packages.html">Adventure Packages</a>
+                    <a href="accommodation.html">Accommodation</a>
+                    <a href="destinations.html">Destinations</a>
+                    <a href="safety.html">Safety Guide</a>
+                  </div>
+                </div>
+              </div>
+            </li>
             <li><a href="packages.html">Packages</a></li>
             <li><a href="accommodation.html">Accommodation</a></li>
             <li><a href="destinations.html">Destinations</a></li>
@@ -68,15 +97,14 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT AREA 
-     ========================================================= -->
+    
     <main>
 
-      <!-- 1. HERO SECTION: Main Banner & Call to Action -->
+      
       <section class="hero">
         <div class="container hero-inner">
           
-          <!-- Hero Text & Buttons -->
+          
           <div class="hero-copy">
             <p class="eyebrow">Western Cape &bull; Since 2024</p>
             <h1>Adventure awaits beyond the everyday</h1>
@@ -92,7 +120,7 @@
             </div>
           </div>
 
-          <!-- Hero Badge / Logo Image -->
+          
           <div class="hero-badge">
             <img
               class="hero-logo"
@@ -104,11 +132,11 @@
         </div>
       </section>
 
-      <!-- 2. ABOUT US PREVIEW: Brief Company Introduction -->
+      
       <section class="section">
         <div class="container intro-grid">
           
-          <!-- Text Introduction -->
+          
           <div>
             <p class="section-eyebrow">Who we are</p>
             <h2 class="section-title">Outdoor experiences that bring people together</h2>
@@ -126,7 +154,7 @@
             <a class="btn btn-ghost" href="about.html">More About Us</a>
           </div>
 
-          <!-- About Us Image -->
+          
           <img
             src="images/canyon-adventure.png"
             alt="Motorcyclists exploring a canyon river route"
@@ -135,7 +163,7 @@
         </div>
       </section>
 
-      <!-- 3. EXPLORE SECTION: Activities vs Packages Quick Links -->
+      
       <section class="section section-alt">
         <div class="container">
           
@@ -149,10 +177,10 @@
             </p>
           </div>
 
-          <!-- Two Card Links with Background Images -->
+          
           <div class="summary-links">
             
-            <!-- Link to Activities -->
+            
             <a 
               class="summary-link summary-link-activities" 
               href="activities.html"
@@ -162,7 +190,7 @@
               <span class="link-cue">Browse activities &rarr;</span>
             </a>
 
-            <!-- Link to Packages -->
+            
             <a 
               class="summary-link summary-link-packages" 
               href="packages.html"
@@ -177,7 +205,7 @@
         </div>
       </section>
 
-      <!-- 4. WHY CHOOSE US: 3 Feature Cards -->
+      
       <section class="section">
         <div class="container">
           
@@ -188,10 +216,10 @@
 
           <div class="feature-grid">
             
-            <!-- Feature 1: Safety -->
+            
             <article class="feature-card">
               <div class="feature-icon">
-                <!-- Shield Icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
                   <path d="m9 12 2 2 4-4" />
@@ -204,10 +232,10 @@
               </p>
             </article>
 
-            <!-- Feature 2: Eco-friendly -->
+            
             <article class="feature-card">
               <div class="feature-icon">
-                <!-- Leaf Icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
                   <path d="M2 21c0-3 1.85-5.36 5.08-6" />
@@ -220,10 +248,10 @@
               </p>
             </article>
 
-            <!-- Feature 3: Team-oriented -->
+            
             <article class="feature-card">
               <div class="feature-icon">
-                <!-- Group/Users Icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
@@ -243,7 +271,7 @@
         </div>
       </section>
 
-      <!-- 5. CALL TO ACTION SECTION -->
+      
       <section class="section">
         <div class="container">
           <div class="cta-band">
@@ -259,13 +287,13 @@
 
     </main>
 
-    <!-- ========================================================= -->
-    <!-- FOOTER SECTION: Info, Navigation Links & Copyright       -->
-    <!-- ========================================================= -->
+    
+    
+    
     <footer class="site-footer">
       <div class="container footer-inner">
         
-        <!-- Footer Brand / About -->
+        
         <div class="footer-brand">
           <img class="footer-logo" src="images/logo.png" alt="Adventure Escape SA logo" />
           <div>
@@ -274,7 +302,7 @@
           </div>
         </div>
 
-        <!-- Footer Navigation Links -->
+        
         <div class="footer-col">
           <h4>Explore</h4>
           <ul>
@@ -286,7 +314,7 @@
           </ul>
         </div>
 
-        <!-- Footer Contact Info -->
+        
         <div class="footer-col">
           <h4>Get in Touch</h4>
           <ul>
@@ -296,7 +324,7 @@
           </ul>
         </div>
 
-        <!-- Copyright Notice -->
+        
         <p class="footer-copy">
           &copy; <span id="year">2024</span> Adventure Escape SA. All rights reserved.
         </p>
@@ -304,7 +332,7 @@
       </div>
     </footer>
 
-    <!-- External JavaScript File -->
+    
     <script src="js/main.js" defer></script>
   </body>
 </html>

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <!-- ============================ Header ============================ -->
+    
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
@@ -37,7 +37,36 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a class="is-active" href="activities.html">Activities</a></li>
+            <li class="mega-menu-item">
+              <button class="nav-trigger is-active" type="button" aria-expanded="false" aria-controls="megaMenuExplore">
+                Activities
+              </button>
+              <div class="mega-menu" id="megaMenuExplore">
+                <div class="mega-menu-grid">
+                  <div class="mega-column">
+                    <h3>Adventure Activities</h3>
+                    <a href="activities.html#kayaking-detail">Kayaking</a>
+                    <a href="activities.html#ziplining-detail">Ziplining</a>
+                    <a href="activities.html#climbing-detail">Rock Climbing</a>
+                    <a href="activities.html#team-detail">Team Challenges</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>More Ways to Explore</h3>
+                    <a href="activities.html#hiking-detail">Coastal Hiking</a>
+                    <a href="activities.html#snorkeling-detail">Snorkel Safari</a>
+                    <a href="activities.html#sup-detail">Paddleboarding</a>
+                    <a href="activities.html#fatbike-detail">Fat Bike Trail</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>Plan Your Escape</h3>
+                    <a href="packages.html">Adventure Packages</a>
+                    <a href="accommodation.html">Accommodation</a>
+                    <a href="destinations.html">Destinations</a>
+                    <a href="safety.html">Safety Guide</a>
+                  </div>
+                </div>
+              </div>
+            </li>
             <li><a href="packages.html">Packages</a></li>
             <li><a href="accommodation.html">Accommodation</a></li>
             <li><a href="destinations.html">Destinations</a></li>
@@ -53,7 +82,7 @@
     </header>
 
     <main>
-      <!-- ============================ Hero ============================ -->
+      
       <section class="page-hero" style="--hero-image: url('images/hero-landscape.png')">
         <div class="container">
           <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -68,7 +97,7 @@
         </div>
       </section>
 
-      <!-- ==================== Activities Grid ==================== -->
+      
       <section class="section" aria-labelledby="activities-title">
         <div class="container">
           <div class="section-center">
@@ -77,7 +106,7 @@
           </div>
 
           <div class="summary-grid">
-            <!-- ===== 1. Kayaking ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/kayaking1.png" alt="Kayaking on a pristine Western Cape bay" />
@@ -100,7 +129,7 @@
               </div>
             </article>
 
-            <!-- ===== 2. Ziplining ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/Ziplining2.png" alt="Ziplining through forest canopy" />
@@ -123,7 +152,7 @@
               </div>
             </article>
 
-            <!-- ===== 3. Rock Climbing ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/rock-climbing1.png" alt="Rock climbing on coastal cliffs" />
@@ -146,7 +175,7 @@
               </div>
             </article>
 
-            <!-- ===== 4. Team Challenges ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/Group-design.png" alt="Team-building challenges" />
@@ -169,7 +198,7 @@
               </div>
             </article>
 
-            <!-- ===== 5. Coastal Hiking & Fynbos Trail ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/coastal-trail.png" alt="Hikers walking along a rocky coastal trail" />
@@ -192,7 +221,7 @@
               </div>
             </article>
 
-            <!-- ===== 6. Marine Snorkel Safari ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/water-adventure.png" alt="Group preparing for a water adventure on a boat" />
@@ -215,7 +244,7 @@
               </div>
             </article>
 
-            <!-- ===== 7. Stand-Up Paddleboarding (SUP) ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/paddleboarding-sunset.png" alt="Paddleboarders enjoying the ocean at sunset" />
@@ -238,7 +267,7 @@
               </div>
             </article>
 
-            <!-- ===== 8. Fat Bike Dune & Beach Trail ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/fat-bike-dunes.png" alt="Fat-bike riders exploring coastal sand dunes" />
@@ -261,7 +290,7 @@
               </div>
             </article>
 
-            <!-- ===== 9. Caving & Coastal Grottoes ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/caving-adventure.png" alt="Illuminated cave passage with limestone formations" />
@@ -287,12 +316,12 @@
         </div>
       </section>
 
-      <!-- ==================== Detailed Activity Information ==================== -->
+      
       <section class="section section-alt" aria-labelledby="detail-title">
         <div class="container">
           <h2 class="section-title" id="detail-title">Activity Details</h2>
 
-          <!-- ===== 1. KAYAKING DETAIL ===== -->
+          
           <div id="kayaking-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/kayaking1.png" alt="Kayaking adventure" class="detail-hero-img" />
@@ -358,7 +387,7 @@
             </aside>
           </div>
 
-          <!-- ===== 2. ZIPLINING DETAIL ===== -->
+          
           <div id="ziplining-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/Ziplining2.png" alt="Ziplining adventure" class="detail-hero-img" />
@@ -421,7 +450,7 @@
             </aside>
           </div>
 
-          <!-- ===== 3. ROCK CLIMBING DETAIL ===== -->
+          
           <div id="climbing-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/rock-climbing1.png" alt="Rock climbing adventure" class="detail-hero-img" />
@@ -484,7 +513,7 @@
             </aside>
           </div>
 
-          <!-- ===== 4. TEAM CHALLENGES DETAIL ===== -->
+          
           <div id="team-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/Group-design.png" alt="Team challenges" class="detail-hero-img" />
@@ -547,7 +576,7 @@
             </aside>
           </div>
 
-          <!-- ===== 5. COASTAL HIKING DETAIL ===== -->
+          
           <div id="hiking-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/coastal-trail.png" alt="Hikers walking along a rocky coastal trail" class="detail-hero-img" />
@@ -610,7 +639,7 @@
             </aside>
           </div>
 
-          <!-- ===== 6. MARINE SNORKEL SAFARI DETAIL ===== -->
+          
           <div id="snorkeling-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/water-adventure.png" alt="Group preparing for a water adventure on a boat" class="detail-hero-img" />
@@ -673,7 +702,7 @@
             </aside>
           </div>
 
-          <!-- ===== 7. STAND-UP PADDLEBOARDING (SUP) DETAIL ===== -->
+          
           <div id="sup-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/paddleboarding-sunset.png" alt="Paddleboarders enjoying the ocean at sunset" class="detail-hero-img" />
@@ -736,7 +765,7 @@
             </aside>
           </div>
 
-          <!-- ===== 8. FAT BIKE DUNE & BEACH TRAIL DETAIL ===== -->
+          
           <div id="fatbike-detail" class="detail-layout" style="margin-bottom: 3.5rem">
             <div class="detail-main">
               <img src="images/fat-bike-dunes.png" alt="Fat-bike riders exploring coastal sand dunes" class="detail-hero-img" />
@@ -799,7 +828,7 @@
             </aside>
           </div>
 
-          <!-- ===== 9. CAVING & GROTTO EXPLORATION DETAIL ===== -->
+          
           <div id="caving-detail" class="detail-layout">
             <div class="detail-main">
               <img src="images/caving-adventure.png" alt="Illuminated cave passage with limestone formations" class="detail-hero-img" />
@@ -864,7 +893,7 @@
         </div>
       </section>
 
-      <!-- ==================== CTA Band ==================== -->
+      
       <section class="section">
         <div class="container">
           <div class="cta-band">
@@ -879,7 +908,7 @@
       </section>
     </main>
 
-    <!-- ============================ Footer ============================ -->
+    
     <footer class="site-footer">
       <div class="container footer-inner">
         <div class="footer-brand">

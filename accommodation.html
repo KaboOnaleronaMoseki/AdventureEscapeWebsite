@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <!-- ============================ Header ============================ -->
+    
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html" aria-label="Adventure Escape SA home">
@@ -37,7 +37,36 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="activities.html">Activities</a></li>
+            <li class="mega-menu-item">
+              <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="megaMenuExplore">
+                Activities
+              </button>
+              <div class="mega-menu" id="megaMenuExplore">
+                <div class="mega-menu-grid">
+                  <div class="mega-column">
+                    <h3>Adventure Activities</h3>
+                    <a href="activities.html#kayaking-detail">Kayaking</a>
+                    <a href="activities.html#ziplining-detail">Ziplining</a>
+                    <a href="activities.html#climbing-detail">Rock Climbing</a>
+                    <a href="activities.html#team-detail">Team Challenges</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>More Ways to Explore</h3>
+                    <a href="activities.html#hiking-detail">Coastal Hiking</a>
+                    <a href="activities.html#snorkeling-detail">Snorkel Safari</a>
+                    <a href="activities.html#sup-detail">Paddleboarding</a>
+                    <a href="activities.html#fatbike-detail">Fat Bike Trail</a>
+                  </div>
+                  <div class="mega-column">
+                    <h3>Plan Your Escape</h3>
+                    <a href="packages.html">Adventure Packages</a>
+                    <a href="accommodation.html">Accommodation</a>
+                    <a href="destinations.html">Destinations</a>
+                    <a href="safety.html">Safety Guide</a>
+                  </div>
+                </div>
+              </div>
+            </li>
             <li><a href="packages.html">Packages</a></li>
             <li><a class="is-active" href="accommodation.html">Accommodation</a></li>
             <li><a href="destinations.html">Destinations</a></li>
@@ -53,7 +82,7 @@
     </header>
 
     <main>
-      <!-- ============================ Hero ============================ -->
+      
       <section class="page-hero" style="--hero-image: url('images/hero-landscape.png')">
         <div class="container">
           <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -68,7 +97,7 @@
         </div>
       </section>
 
-      <!-- ==================== Accommodation Grid ==================== -->
+      
       <section class="section" aria-labelledby="stays-title">
         <div class="container">
           <div class="section-center">
@@ -81,7 +110,7 @@
           </div>
 
           <div class="summary-grid cols-2">
-            <!-- ===== Stay 1: Coastal Eco-Cabins ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/coastal-eco-cabin.png" alt="Oceanfront eco-cabin at sunset" />
@@ -106,7 +135,7 @@
               </div>
             </article>
 
-            <!-- ===== Stay 2: Forest Glamping Tents ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/canopy-glamping.png" alt="Luxury canopy glamping tent surrounded by trees" />
@@ -131,7 +160,7 @@
               </div>
             </article>
 
-            <!-- ===== Stay 3: Mountain Adventure Lodge ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/mountain-lodge-fireplace.png" alt="Mountain lodge outdoor fireplace and seating area" />
@@ -156,7 +185,7 @@
               </div>
             </article>
 
-            <!-- ===== Stay 4: Seaside Camp & Dorms ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/glamping-campsite.png" alt="Glamping tents at a coastal campsite" />
@@ -184,7 +213,7 @@
         </div>
       </section>
 
-      <!-- ==================== All-Inclusive Packages ==================== -->
+      
       <section class="section section-alt" aria-labelledby="packages-title">
         <div class="container">
           <div class="section-center">
@@ -198,7 +227,7 @@
           </div>
 
           <div class="summary-grid">
-            <!-- ===== Package 1: Coastal Safari & Wine Retreat ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/fullactivities.png" alt="Coastal Safari and Wine Retreat Package" />
@@ -233,7 +262,7 @@
               </div>
             </article>
 
-            <!-- ===== Package 2: Canopy Adrenaline & Bush Retreat ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/waterzip.png" alt="Canopy Adrenaline Glamping Package" />
@@ -268,7 +297,7 @@
               </div>
             </article>
 
-            <!-- ===== Package 3: Mountain Lodge & Trail Expedition ===== -->
+            
             <article class="experience-card">
               <div class="experience-card-media">
                 <img src="images/summit.png" alt="Mountain Lodge Wilderness Expedition" />
@@ -306,7 +335,7 @@
         </div>
       </section>
 
-      <!-- ==================== Amenities & Perks ==================== -->
+      
       <section class="section" aria-labelledby="amenities-title">
         <div class="container">
           <div class="section-center">
@@ -317,7 +346,7 @@
           <div class="feature-grid">
             <article class="feature-card">
               <div class="feature-icon" aria-hidden="true">
-                <!-- Lock / Gear icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -332,7 +361,7 @@
 
             <article class="feature-card">
               <div class="feature-icon" aria-hidden="true">
-                <!-- Sun / Solar icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="5" />
                   <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72 1.42-1.42" />
@@ -347,7 +376,7 @@
 
             <article class="feature-card">
               <div class="feature-icon" aria-hidden="true">
-                <!-- Bus / Shuttle icon -->
+                
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M8 6v6m8-6v6M4 18h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z" />
                   <path d="m6 18-2 3m14-3 2 3" />
@@ -363,7 +392,7 @@
         </div>
       </section>
 
-      <!-- ==================== Call to Action ==================== -->
+      
       <section class="section">
         <div class="container">
           <div class="cta-band">
@@ -378,7 +407,7 @@
       </section>
     </main>
 
-    <!-- ============================ Footer ============================ -->
+    
     <footer class="site-footer">
       <div class="container footer-inner">
         <div class="footer-brand">
