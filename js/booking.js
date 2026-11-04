@@ -427,6 +427,9 @@ form?.addEventListener("submit", async (event) => {
 
   const emailParams = {
     to_email: recipient,
+    email: recipient,
+    recipient: recipient,
+    to_name: "Admin",
     customer_name: customerName,
     customer_email: email,
     customer_phone: phone || "Not provided",
