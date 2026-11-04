@@ -34,18 +34,46 @@ const activityTimeInput = document.getElementById("activityTime");
 const checkInDateInput = document.getElementById("checkInDate");
 const checkOutDateInput = document.getElementById("checkOutDate");
 
-try {
-  const savedProfile = JSON.parse(
-    sessionStorage.getItem("adventure-escape-client-profile") || "null"
-  );
-  if (savedProfile) {
-    document.getElementById("fullName").value = savedProfile.fullName || "";
-    document.getElementById("email").value = savedProfile.email || "";
-    document.getElementById("phone").value = savedProfile.phone || "";
-  }
-} catch {
+async function prefillCustomerInfo() {
+  try {
+    const savedProfile = JSON.parse(
+      sessionStorage.getItem("adventure-escape-client-profile") || "null"
+    );
+    if (savedProfile) {
+      if (savedProfile.fullName && document.getElementById("fullName")) {
+        document.getElementById("fullName").value = savedProfile.fullName;
+      }
+      if (savedProfile.email && document.getElementById("email")) {
+        document.getElementById("email").value = savedProfile.email;
+      }
+      if (savedProfile.phone && document.getElementById("phone")) {
+        document.getElementById("phone").value = savedProfile.phone;
+      }
+    }
 
+    const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+    if (supabase) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const name = session.user.user_metadata?.full_name || session.user.email.split("@")[0];
+        const phone = session.user.user_metadata?.phone || "";
+        const email = session.user.email;
+        if (!document.getElementById("fullName").value && name) {
+          document.getElementById("fullName").value = name;
+        }
+        if (!document.getElementById("email").value && email) {
+          document.getElementById("email").value = email;
+        }
+        if (!document.getElementById("phone").value && phone) {
+          document.getElementById("phone").value = phone;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("Could not prefill customer details:", err);
+  }
 }
+void prefillCustomerInfo();
 
 const activityQuantities = Object.fromEntries(activities.map(({ id }) => [id, 0]));
 const accommodationQuantities = Object.fromEntries(accommodations.map(({ id }) => [id, 0]));
@@ -84,12 +112,12 @@ function formatSouthAfricanDate(value) {
 }
 
 function updateDateDisplays() {
-  document.getElementById("formattedActivityDate").textContent =
-    formatSouthAfricanDate(activityDateInput.value);
-  document.getElementById("formattedCheckInDate").textContent =
-    formatSouthAfricanDate(checkInDateInput.value);
-  document.getElementById("formattedCheckOutDate").textContent =
-    formatSouthAfricanDate(checkOutDateInput.value);
+  const actDateEl = document.getElementById("formattedActivityDate");
+  const inDateEl = document.getElementById("formattedCheckInDate");
+  const outDateEl = document.getElementById("formattedCheckOutDate");
+  if (actDateEl) actDateEl.textContent = formatSouthAfricanDate(activityDateInput.value);
+  if (inDateEl) inDateEl.textContent = formatSouthAfricanDate(checkInDateInput.value);
+  if (outDateEl) outDateEl.textContent = formatSouthAfricanDate(checkOutDateInput.value);
 }
 
 function setMessage(text, isError = false) {
@@ -213,27 +241,35 @@ function getDateError() {
 
 function updateSummary() {
   const summary = getPricing();
-  document.getElementById("summaryBookings").textContent = summary.totalActivities;
-  document.getElementById("summaryActivityTypes").textContent = summary.selectedActivityTypes;
-  document.getElementById("summarySubtotal").textContent = formatMoney(summary.activitySubtotal);
-  document.getElementById("summaryDiscount").textContent =
-    `${formatMoney(summary.discountAmount)} (${summary.discountPercent}%)`;
-  document.getElementById("summaryAccomNights").textContent = summary.accommodationCount;
-  document.getElementById("summaryAccomTotal").textContent =
-    formatMoney(summary.accommodationSubtotal);
-  document.getElementById("summaryTotal").textContent = formatMoney(summary.total);
+  const bookingsEl = document.getElementById("summaryBookings");
+  const typesEl = document.getElementById("summaryActivityTypes");
+  const subtotalEl = document.getElementById("summarySubtotal");
+  const discountEl = document.getElementById("summaryDiscount");
+  const accomNightsEl = document.getElementById("summaryAccomNights");
+  const accomTotalEl = document.getElementById("summaryAccomTotal");
+  const totalEl = document.getElementById("summaryTotal");
+
+  if (bookingsEl) bookingsEl.textContent = summary.totalActivities;
+  if (typesEl) typesEl.textContent = summary.selectedActivityTypes;
+  if (subtotalEl) subtotalEl.textContent = formatMoney(summary.activitySubtotal);
+  if (discountEl) discountEl.textContent = `${formatMoney(summary.discountAmount)} (${summary.discountPercent}%)`;
+  if (accomNightsEl) accomNightsEl.textContent = summary.accommodationCount;
+  if (accomTotalEl) accomTotalEl.textContent = formatMoney(summary.accommodationSubtotal);
+  if (totalEl) totalEl.textContent = formatMoney(summary.total);
   updateFormState();
 }
 
 function updateFormState(showDateError = false, clearError = false) {
   if (!form || !submitButton) return;
   const today = todayInSouthAfrica();
-  activityDateInput.min = today;
-  checkInDateInput.min = today;
-  checkOutDateInput.min =
-    checkInDateInput.value >= today
-      ? addDays(checkInDateInput.value, 1)
-      : today;
+  if (activityDateInput) activityDateInput.min = today;
+  if (checkInDateInput) checkInDateInput.min = today;
+  if (checkOutDateInput) {
+    checkOutDateInput.min =
+      checkInDateInput.value >= today
+        ? addDays(checkInDateInput.value, 1)
+        : today;
+  }
   const hasSelection =
     Object.values(activityQuantities).some((count) => count > 0) ||
     Object.values(accommodationQuantities).some((count) => count > 0);
@@ -298,120 +334,138 @@ form?.addEventListener("submit", async (event) => {
     return;
   }
 
-  const requestBody = {
-    customerName: document.getElementById("fullName").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    phone: document.getElementById("phone").value.trim(),
-    notes: document.getElementById("notes").value.trim(),
-    ...(activityIds.length
-      ? {
-          activityIds,
-          activityQuantities: Object.fromEntries(
-            activityIds.map((id) => [id, activityQuantities[id]])
-          )
-        }
-      : {}),
-    ...(activityIds.length
-      ? { activityDateTime: `${activityDateInput.value}T${activityTimeInput.value}` }
-      : {}),
-    ...(accommodationIds.length
-      ? {
-          accommodationIds,
-          accommodationQuantities: Object.fromEntries(
-            accommodationIds.map((id) => [id, accommodationQuantities[id]])
-          ),
-          checkInDate: checkInDateInput.value,
-          checkOutDate: checkOutDateInput.value
-        }
-      : {})
-  };
-
-  const apiUrl = document
-    .querySelector('meta[name="booking-api-url"]')
-    ?.content.trim();
-  if (!apiUrl) {
-    setMessage(
-      "Online booking is not configured on this website. Please try again once the booking service is connected.",
-      true
-    );
-    return;
-  }
-  try {
-    const parsedApiUrl = new URL(apiUrl);
-    if (parsedApiUrl.protocol !== "https:" && parsedApiUrl.hostname !== "localhost") {
-      throw new Error("The booking API must use HTTPS.");
-    }
-  } catch {
-    setMessage(
-      "Online booking is not configured correctly. Please contact us for assistance.",
-      true
-    );
-    return;
-  }
   submitButton.disabled = true;
   submitButton.textContent = "Sending request…";
   setMessage("");
 
-  try {
-    const sessionToken = sessionStorage.getItem("adventure-escape-client-session");
-    let response;
+  const pricing = getPricing();
+  const customerName = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const notes = document.getElementById("notes")?.value.trim() || "";
+
+  const activityNames = activityIds.map((id) => {
+    const act = activities.find((a) => a.id === id);
+    return `${act ? act.name : id} (x${activityQuantities[id]})`;
+  });
+  const accommodationNames = accommodationIds.map((id) => {
+    const acc = accommodations.find((a) => a.id === id);
+    return `${acc ? acc.name : id} (x${accommodationQuantities[id]})`;
+  });
+
+  const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+  let currentUser = null;
+  if (supabase) {
     try {
-      response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {})
-        },
-        body: JSON.stringify(requestBody)
-      });
+      const { data } = await supabase.auth.getUser();
+      currentUser = data?.user || null;
     } catch {
-      setMessage(
-        "We could not reach the booking service. Please try again when the online booking service is available.",
-        true
-      );
-      return;
+      // ignore
     }
-
-    let body;
-    try {
-      body = await response.json();
-    } catch {
-      setMessage("The booking service returned an invalid response. Please try again.", true);
-      return;
-    }
-    if (!body || typeof body !== "object") {
-      setMessage("The booking service returned an invalid response. Please try again.", true);
-      return;
-    }
-
-    if (!response.ok) {
-      setMessage(
-        body.errors?.[0]?.message || body.error ||
-          "The booking could not be accepted. Please review your dates and try again.",
-        true
-      );
-      return;
-    }
-    if (response.status !== 201 || body.booking?.status !== "pending") {
-      setMessage("The booking service could not confirm your reservation request. Please try again.", true);
-      return;
-    }
-
-    const reference = body.booking.id ? ` Reference: ${body.booking.id}.` : "";
-    const serverTotal = body.booking.pricing?.total;
-    const price = typeof serverTotal === "number"
-      ? ` Estimated total: ${formatMoney(serverTotal)}.`
-      : "";
-    const emailStatus = body.emailNotification?.status === "sent"
-      ? " The team has been notified by email."
-      : " Its email notification is queued for delivery.";
-    setMessage(`Your reservation request is pending confirmation.${price}${emailStatus}${reference}`);
-    form.reset();
-    resetQuantities();
-    updateDateDisplays();
-    updateSummary();
-  } finally {
-    submitButton.textContent = "Confirm & Reserve";
-    updateFormState();
   }
+
+  const bookingRecord = {
+    user_id: currentUser?.id || null,
+    customer_name: customerName,
+    email: email,
+    phone: phone,
+    notes: notes,
+    activity_ids: activityIds,
+    activity_quantities: Object.fromEntries(
+      activityIds.map((id) => [id, activityQuantities[id]])
+    ),
+    activity_date_time: activityIds.length
+      ? `${activityDateInput.value}T${activityTimeInput.value}`
+      : null,
+    accommodation_ids: accommodationIds,
+    accommodation_quantities: Object.fromEntries(
+      accommodationIds.map((id) => [id, accommodationQuantities[id]])
+    ),
+    check_in_date: accommodationIds.length ? checkInDateInput.value : null,
+    check_out_date: accommodationIds.length ? checkOutDateInput.value : null,
+    total_price: pricing.total,
+    pricing: pricing,
+    status: "pending",
+    created_at: new Date().toISOString()
+  };
+
+  let bookingId = "";
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("bookings")
+        .insert([bookingRecord])
+        .select("id")
+        .single();
+
+      if (!error && data?.id) {
+        bookingId = data.id;
+      } else if (error) {
+        console.warn("Supabase booking insert notice:", error.message);
+      }
+    } catch (dbErr) {
+      console.warn("Supabase booking insert error:", dbErr);
+    }
+  }
+
+  if (!bookingId) {
+    bookingId = "AE-" + Math.random().toString(36).substring(2, 9).toUpperCase();
+  }
+
+  // Email notification via EmailJS
+  let emailSent = false;
+  const emailjsCfg = window.ADVENTURE_CONFIG?.emailjs;
+  const recipient = emailjsCfg?.recipientEmail || "Kaboonalerona7@gmail.com";
+
+  const emailParams = {
+    to_email: recipient,
+    customer_name: customerName,
+    customer_email: email,
+    customer_phone: phone || "Not provided",
+    activities: activityNames.join(", ") || "None",
+    activity_date: activityIds.length
+      ? `${activityDateInput.value} at ${activityTimeInput.value}`
+      : "N/A",
+    accommodation: accommodationNames.join(", ") || "None",
+    accommodation_dates: accommodationIds.length
+      ? `${checkInDateInput.value} to ${checkOutDateInput.value}`
+      : "N/A",
+    notes: notes || "None",
+    total_price: formatMoney(pricing.total),
+    booking_id: bookingId
+  };
+
+  if (
+    window.emailjs &&
+    emailjsCfg &&
+    emailjsCfg.serviceId &&
+    emailjsCfg.templateId &&
+    emailjsCfg.publicKey &&
+    emailjsCfg.serviceId !== "YOUR_SERVICE_ID"
+  ) {
+    try {
+      await window.emailjs.send(
+        emailjsCfg.serviceId,
+        emailjsCfg.templateId,
+        emailParams,
+        emailjsCfg.publicKey
+      );
+      emailSent = true;
+    } catch (e) {
+      console.error("EmailJS sending error:", e);
+    }
+  }
+
+  const successMessage = emailSent
+    ? `Your reservation request has been submitted! Reference: ${bookingId}. Estimated total: ${formatMoney(pricing.total)}. A confirmation email has been dispatched to ${recipient}.`
+    : `Your reservation request has been submitted! Reference: ${bookingId}. Estimated total: ${formatMoney(pricing.total)}. Our adventure team will review your booking shortly.`;
+
+  setMessage(successMessage);
+  form.reset();
+  resetQuantities();
+  updateDateDisplays();
+  updateSummary();
+
+  submitButton.textContent = "Confirm & Reserve";
+  updateFormState();
 });

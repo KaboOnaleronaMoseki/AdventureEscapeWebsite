@@ -12,29 +12,42 @@ const submitButton = document.getElementById("accountSubmit");
 const noteEl = document.getElementById("accountNote");
 const bookingsMessage = document.getElementById("accountBookingsMessage");
 const bookingsList = document.getElementById("accountBookingsList");
-const apiBaseUrl =
-  document.querySelector('meta[name="account-api-url"]')?.content.trim().replace(/\/+$/, "") || "";
-const verificationToken = new URLSearchParams(window.location.search).get("token");
 
-const SESSION_KEY = "adventure-escape-client-session";
 const PROFILE_KEY = "adventure-escape-client-profile";
 let mode = "register";
 
+function setMessage(text, isError = false) {
+  if (!message) return;
+  message.textContent = text;
+  message.classList.toggle("is-error", isError);
+  message.classList.toggle("is-success", Boolean(text) && !isError);
+}
+
 function formatBookingDate(booking) {
-  const dateValue = booking.activityDateTime || booking.checkInDate || booking.createdAt;
+  const dateValue =
+    booking.activity_date_time ||
+    booking.activityDateTime ||
+    booking.check_in_date ||
+    booking.checkInDate ||
+    booking.created_at ||
+    booking.createdAt;
   const date = new Date(dateValue);
   if (Number.isNaN(date.getTime())) return dateValue || "Date unavailable";
   const options = {
     dateStyle: "medium",
     timeZone: "Africa/Johannesburg"
   };
-  if (booking.activityDateTime) options.timeStyle = "short";
+  if (booking.activity_date_time || booking.activityDateTime) {
+    options.timeStyle = "short";
+  }
   return new Intl.DateTimeFormat("en-ZA", options).format(date);
 }
 
 function renderBookings(bookings) {
+  if (!bookingsList) return;
   bookingsList.replaceChildren();
-  if (!bookings.length) {
+
+  if (!bookings || !bookings.length) {
     bookingsMessage.textContent = "You haven’t made any bookings yet.";
     return;
   }
@@ -45,32 +58,37 @@ function renderBookings(bookings) {
     item.className = "account-booking";
 
     const title = document.createElement("h4");
+    const rawActivities = booking.activity_ids || booking.activityIds || [];
+    const rawAccommodations = booking.accommodation_ids || booking.accommodationIds || [];
     const bookingItems = [
-      ...(Array.isArray(booking.activityIds) ? booking.activityIds : []),
-      ...(Array.isArray(booking.accommodationIds) ? booking.accommodationIds : [])
+      ...(Array.isArray(rawActivities) ? rawActivities : []),
+      ...(Array.isArray(rawAccommodations) ? rawAccommodations : [])
     ];
     title.textContent = bookingItems.length ? bookingItems.join(", ") : "Adventure booking";
 
     const details = document.createElement("p");
-    details.textContent = `Date: ${formatBookingDate(booking)} · Status: ${booking.status}`;
+    const statusText = booking.status ? (booking.status.charAt(0).toUpperCase() + booking.status.slice(1)) : "Pending";
+    details.textContent = `Date: ${formatBookingDate(booking)} · Status: ${statusText}`;
     item.append(title, details);
 
-    if (typeof booking.pricing?.total === "number") {
+    const total = booking.pricing?.total ?? booking.total_price;
+    if (typeof total === "number") {
       const price = document.createElement("p");
-      price.textContent = `Estimated total: R${booking.pricing.total.toLocaleString("en-ZA")}`;
+      price.textContent = `Estimated total: R${total.toLocaleString("en-ZA")}`;
       item.append(price);
     }
 
     const reference = document.createElement("small");
-    reference.textContent = `Reference: ${booking.id}`;
+    reference.textContent = `Reference: ${booking.id || "N/A"}`;
     item.append(reference);
+
     bookingsList.append(item);
   }
 }
 
-async function loadAccountBookings() {
-  const token = sessionStorage.getItem(SESSION_KEY);
-  if (!token) {
+async function loadAccountBookings(user) {
+  if (!bookingsMessage || !bookingsList) return;
+  if (!user) {
     bookingsMessage.textContent = "Sign in to view your bookings.";
     bookingsList.replaceChildren();
     return;
@@ -78,148 +96,193 @@ async function loadAccountBookings() {
 
   bookingsMessage.textContent = "Loading your bookings…";
   bookingsList.replaceChildren();
+
+  const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+  if (!supabase) {
+    bookingsMessage.textContent = "Database connection not available.";
+    return;
+  }
+
   try {
-    const { response, body } = await apiRequest("/bookings", {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!response.ok || !Array.isArray(body.bookings)) {
-      throw new Error(body.error || "Unable to load your bookings.");
+    const filter = user.id ? `user_id.eq.${user.id},email.eq.${user.email}` : `email.eq.${user.email}`;
+    const { data, error } = await supabase
+      .from("bookings")
+      .select("*")
+      .or(filter)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.warn("Could not query bookings:", error.message);
+      bookingsMessage.textContent = "No bookings found or table pending setup in Supabase.";
+      return;
     }
-    renderBookings(body.bookings);
-  } catch (error) {
-    bookingsMessage.textContent =
-      error instanceof Error ? error.message : "Unable to load your bookings.";
+    renderBookings(data || []);
+  } catch (err) {
+    console.error("Error loading bookings:", err);
+    bookingsMessage.textContent = "Unable to load your bookings.";
   }
 }
 
-function setMessage(text, isError = false) {
-  message.textContent = text;
-  message.classList.toggle("is-error", isError);
-  message.classList.toggle("is-success", Boolean(text) && !isError);
-}
-
-async function apiRequest(path, options) {
-  let response;
-  try {
-    response = await fetch(`${apiBaseUrl}${path}`, options);
-  } catch {
-    throw new Error("We could not reach the account service. Your request was not submitted.");
-  }
-
-  let body;
-  try {
-    body = await response.json();
-  } catch {
-    throw new Error("The account service returned an invalid response.");
-  }
-  if (!body || typeof body !== "object") {
-    throw new Error("The account service returned an invalid response.");
-  }
-  return { response, body };
-}
-
-function showSignedIn(account) {
+function showSignedIn(user) {
+  if (!formPanel || !signedInPanel) return;
   formPanel.hidden = true;
   signedInPanel.hidden = false;
-  document.getElementById("accountName").textContent = account.fullName;
-  document.getElementById("accountEmail").textContent = account.email;
-  document.getElementById("accountPhone").textContent = account.phone || "";
-  sessionStorage.setItem(PROFILE_KEY, JSON.stringify(account));
-  void loadAccountBookings();
+
+  const profile = {
+    id: user.id,
+    fullName: user.user_metadata?.full_name || user.email.split("@")[0],
+    email: user.email,
+    phone: user.user_metadata?.phone || ""
+  };
+
+  const nameEl = document.getElementById("accountName");
+  const emailEl = document.getElementById("accountEmail");
+  const phoneEl = document.getElementById("accountPhone");
+
+  if (nameEl) nameEl.textContent = profile.fullName;
+  if (emailEl) emailEl.textContent = profile.email;
+  if (phoneEl) phoneEl.textContent = profile.phone;
+
+  sessionStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  void loadAccountBookings(user);
 }
 
 function setMode(nextMode) {
   mode = nextMode;
   const registering = mode === "register";
-  nameGroup.hidden = !registering;
-  phoneGroup.hidden = !registering;
-  document.getElementById("fullName").required = registering;
-  heading.textContent = registering ? "Create your account" : "Sign in";
-  document.getElementById("password").autocomplete = registering ? "new-password" : "current-password";
-  document.getElementById("password").minLength = registering ? 12 : 0;
-  submitButton.textContent = registering ? "Create account" : "Sign in";
-  switchModeButton.textContent = registering
-    ? "Already registered? Sign in"
-    : "New here? Create an account";
+
+  if (nameGroup) nameGroup.hidden = !registering;
+  if (phoneGroup) phoneGroup.hidden = !registering;
+
+  const fullNameInput = document.getElementById("fullName");
+  if (fullNameInput) fullNameInput.required = registering;
+
+  if (heading) heading.textContent = registering ? "Create your account" : "Sign in";
+
+  const passwordInput = document.getElementById("password");
+  if (passwordInput) {
+    passwordInput.autocomplete = registering ? "new-password" : "current-password";
+    passwordInput.minLength = registering ? 8 : 0;
+  }
+
+  if (submitButton) submitButton.textContent = registering ? "Create account" : "Sign in";
+  if (switchModeButton) {
+    switchModeButton.textContent = registering
+      ? "Already registered? Sign in"
+      : "New here? Create an account";
+  }
+
   if (noteEl) {
     noteEl.textContent = registering
-      ? "Your name, email, and optional phone are stored securely and shared with our account team. Your password is hashed and never emailed. Email verification is required before you can sign in."
+      ? "Create an account to save your contact details for future adventure reservations."
       : "";
   }
   setMessage("");
 }
 
-switchModeButton.addEventListener("click", () => {
+switchModeButton?.addEventListener("click", () => {
   setMode(mode === "register" ? "signIn" : "register");
 });
 
-resendButton.addEventListener("click", async () => {
+resendButton?.addEventListener("click", async () => {
+  const emailInput = document.getElementById("email");
+  const email = emailInput?.value.trim();
+  if (!email) {
+    setMessage("Please enter your email address to resend verification.", true);
+    return;
+  }
+
   submitButton.disabled = true;
   try {
-    const { response, body } = await apiRequest("/account-verification", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: document.getElementById("email").value.trim() }),
+    const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+    if (!supabase) throw new Error("Supabase is not configured.");
+
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: email
     });
-    setMessage(
-      response.ok ? body.message : body.error || "Unable to request verification.",
-      !response.ok,
-    );
-  } catch (error) {
-    setMessage(error.message, true);
+    if (error) {
+      setMessage(error.message, true);
+    } else {
+      setMessage("Verification email resent. Please check your inbox and spam folder.");
+    }
+  } catch (err) {
+    setMessage(err instanceof Error ? err.message : "Unable to request verification.", true);
   } finally {
     submitButton.disabled = false;
   }
 });
 
-form.addEventListener("submit", async (event) => {
+form?.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!form.reportValidity()) return;
+
   submitButton.disabled = true;
   setMessage("");
 
-  const fullName = document.getElementById("fullName").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const password = document.getElementById("password").value;
+  const fullName = document.getElementById("fullName")?.value.trim() || "";
+  const email = document.getElementById("email")?.value.trim() || "";
+  const phone = document.getElementById("phone")?.value.trim() || "";
+  const password = document.getElementById("password")?.value || "";
 
   try {
+    const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+    if (!supabase) throw new Error("Supabase is not initialized. Please verify your connection.");
+
     if (mode === "register") {
-      const { response, body } = await apiRequest("/accounts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, phone, password }),
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            phone: phone
+          }
+        }
       });
-      if (!response.ok) {
-        setMessage(body.error || "Unable to create your account.", true);
+
+      if (error) {
+        setMessage(error.message, true);
         return;
       }
 
+      if (data.session && data.user) {
+        showSignedIn(data.user);
+        setMessage("Account created and signed in successfully!");
+        return;
+      }
+
+      // If email confirmation is enabled on Supabase project:
       document.getElementById("password").value = "";
       setMode("signIn");
-      resendButton.hidden = false;
-      setMessage(
-        body.message || "Account created. Check your email to verify your address.",
-        !body.verificationEmailSent,
-      );
+      if (resendButton) resendButton.hidden = false;
+      setMessage("Account created! Check your email to verify your address, then sign in.");
       return;
     }
 
-    const { response, body } = await apiRequest("/account-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+    // Sign in mode
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
     });
-    if (!response.ok || !body.account || !body.token) {
-      if (body.code === "email_not_verified") resendButton.hidden = false;
-      setMessage(body.error || "Unable to sign in.", true);
+
+    if (error) {
+      if (error.message.toLowerCase().includes("email not confirmed")) {
+        if (resendButton) resendButton.hidden = false;
+      }
+      setMessage(error.message, true);
       return;
     }
 
-    sessionStorage.setItem(SESSION_KEY, body.token);
-    showSignedIn(body.account);
-    document.getElementById("password").value = "";
-    resendButton.hidden = true;
+    if (!data?.user) {
+      setMessage("Unable to sign in. Please verify your credentials.", true);
+      return;
+    }
+
+    showSignedIn(data.user);
+    const pwd = document.getElementById("password");
+    if (pwd) pwd.value = "";
+    if (resendButton) resendButton.hidden = true;
     setMessage("You are signed in.");
   } catch (error) {
     setMessage(error instanceof Error ? error.message : "The account service is unavailable.", true);
@@ -228,70 +291,38 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-signOutButton.addEventListener("click", async () => {
-  const token = sessionStorage.getItem(SESSION_KEY);
-  let signOutError = "";
+signOutButton?.addEventListener("click", async () => {
   try {
-    if (token) {
-      const { response } = await apiRequest("/account-session", {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) throw new Error("The server could not revoke the session.");
+    const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+    if (supabase) {
+      await supabase.auth.signOut();
     }
-  } catch (error) {
-    signOutError = error instanceof Error
-      ? `${error.message} The session was cleared from this browser.`
-      : "The server could not revoke the session. The session was cleared from this browser.";
+  } catch (err) {
+    console.error("Sign out error:", err);
   } finally {
-    sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(PROFILE_KEY);
     signedInPanel.hidden = true;
     formPanel.hidden = false;
     bookingsList.replaceChildren();
-    bookingsMessage.textContent = "";
+    if (bookingsMessage) bookingsMessage.textContent = "";
     setMode("signIn");
-    if (signOutError) setMessage(signOutError, true);
+    setMessage("You have been signed out.");
   }
 });
 
-async function verifyEmailToken() {
-  if (!verificationToken) return;
-  window.history.replaceState({}, document.title, window.location.pathname);
-  try {
-    const { response, body } = await apiRequest("/account-verification", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: verificationToken }),
-    });
-    if (!response.ok) {
-      setMessage(body.error || "Unable to verify this email address.", true);
-      return;
-    }
-    document.getElementById("email").value = body.account?.email || "";
-    setMode("signIn");
-    setMessage(body.message || "Email verified. You can now sign in.");
-  } catch (error) {
-    setMessage(error instanceof Error ? error.message : "The account service is unavailable.", true);
-  }
-}
-
 async function restoreSession() {
-  const token = sessionStorage.getItem(SESSION_KEY);
-  if (!token) return;
+  const supabase = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
+  if (!supabase) return;
+
   try {
-    const { response, body } = await apiRequest("/account-session", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (response.ok && body.account) {
-      showSignedIn(body.account);
-      return;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      showSignedIn(session.user);
     }
-    sessionStorage.removeItem(SESSION_KEY);
-    sessionStorage.removeItem(PROFILE_KEY);
-  } catch (error) {
-    setMessage(error instanceof Error ? error.message : "Unable to restore your account session.", true);
+  } catch (err) {
+    console.warn("Unable to restore session:", err);
   }
 }
 
-void verifyEmailToken().then(() => restoreSession());
+// Initial session check
+void restoreSession();
