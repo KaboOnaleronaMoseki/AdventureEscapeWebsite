@@ -1426,6 +1426,33 @@ h3 {
   font-weight: 700;
 }
 
+.account-bookings {
+  margin: 1.5rem 0;
+}
+
+.account-bookings h3 {
+  margin-bottom: 0.75rem;
+  color: var(--cream);
+}
+
+.account-booking {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(var(--indian-yellow-rgb), 0.2);
+  border-radius: var(--corner-radius);
+  background: rgba(var(--old-burgundy-rgb), 0.35);
+}
+
+.account-booking h4,
+.account-booking p {
+  margin: 0 0 0.4rem;
+}
+
+.account-booking small {
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
 .form-group small {
   color: var(--text-muted);
   font-size: 0.85rem;

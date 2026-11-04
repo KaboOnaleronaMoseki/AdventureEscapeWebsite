@@ -10,6 +10,8 @@ const phoneGroup = document.getElementById("phoneGroup");
 const heading = document.getElementById("accountHeading");
 const submitButton = document.getElementById("accountSubmit");
 const noteEl = document.getElementById("accountNote");
+const bookingsMessage = document.getElementById("accountBookingsMessage");
+const bookingsList = document.getElementById("accountBookingsList");
 const apiBaseUrl =
   document.querySelector('meta[name="account-api-url"]')?.content.trim().replace(/\/+$/, "") || "";
 const verificationToken = new URLSearchParams(window.location.search).get("token");
@@ -17,6 +19,78 @@ const verificationToken = new URLSearchParams(window.location.search).get("token
 const SESSION_KEY = "adventure-escape-client-session";
 const PROFILE_KEY = "adventure-escape-client-profile";
 let mode = "register";
+
+function formatBookingDate(booking) {
+  const dateValue = booking.activityDateTime || booking.checkInDate || booking.createdAt;
+  const date = new Date(dateValue);
+  if (Number.isNaN(date.getTime())) return dateValue || "Date unavailable";
+  const options = {
+    dateStyle: "medium",
+    timeZone: "Africa/Johannesburg"
+  };
+  if (booking.activityDateTime) options.timeStyle = "short";
+  return new Intl.DateTimeFormat("en-ZA", options).format(date);
+}
+
+function renderBookings(bookings) {
+  bookingsList.replaceChildren();
+  if (!bookings.length) {
+    bookingsMessage.textContent = "You haven’t made any bookings yet.";
+    return;
+  }
+
+  bookingsMessage.textContent = "";
+  for (const booking of bookings) {
+    const item = document.createElement("article");
+    item.className = "account-booking";
+
+    const title = document.createElement("h4");
+    const bookingItems = [
+      ...(Array.isArray(booking.activityIds) ? booking.activityIds : []),
+      ...(Array.isArray(booking.accommodationIds) ? booking.accommodationIds : [])
+    ];
+    title.textContent = bookingItems.length ? bookingItems.join(", ") : "Adventure booking";
+
+    const details = document.createElement("p");
+    details.textContent = `Date: ${formatBookingDate(booking)} · Status: ${booking.status}`;
+    item.append(title, details);
+
+    if (typeof booking.pricing?.total === "number") {
+      const price = document.createElement("p");
+      price.textContent = `Estimated total: R${booking.pricing.total.toLocaleString("en-ZA")}`;
+      item.append(price);
+    }
+
+    const reference = document.createElement("small");
+    reference.textContent = `Reference: ${booking.id}`;
+    item.append(reference);
+    bookingsList.append(item);
+  }
+}
+
+async function loadAccountBookings() {
+  const token = sessionStorage.getItem(SESSION_KEY);
+  if (!token) {
+    bookingsMessage.textContent = "Sign in to view your bookings.";
+    bookingsList.replaceChildren();
+    return;
+  }
+
+  bookingsMessage.textContent = "Loading your bookings…";
+  bookingsList.replaceChildren();
+  try {
+    const { response, body } = await apiRequest("/bookings", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!response.ok || !Array.isArray(body.bookings)) {
+      throw new Error(body.error || "Unable to load your bookings.");
+    }
+    renderBookings(body.bookings);
+  } catch (error) {
+    bookingsMessage.textContent =
+      error instanceof Error ? error.message : "Unable to load your bookings.";
+  }
+}
 
 function setMessage(text, isError = false) {
   message.textContent = text;
@@ -51,6 +125,7 @@ function showSignedIn(account) {
   document.getElementById("accountEmail").textContent = account.email;
   document.getElementById("accountPhone").textContent = account.phone || "";
   sessionStorage.setItem(PROFILE_KEY, JSON.stringify(account));
+  void loadAccountBookings();
 }
 
 function setMode(nextMode) {
@@ -173,6 +248,8 @@ signOutButton.addEventListener("click", async () => {
     sessionStorage.removeItem(PROFILE_KEY);
     signedInPanel.hidden = true;
     formPanel.hidden = false;
+    bookingsList.replaceChildren();
+    bookingsMessage.textContent = "";
     setMode("signIn");
     if (signOutError) setMessage(signOutError, true);
   }

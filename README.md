@@ -26,8 +26,9 @@ sign-out through the server API; it never stores passwords or creates a local ac
 require a verified email before sign-in. For a separate static-site origin, set
 the `account-api-url` meta tag in `account.html` to the deployed API origin and add the website
 origin to the server's `ALLOWED_ORIGINS`. `ACCOUNT_VERIFICATION_URL` on the server must point to
-this page. Signed-in booking requests are attached to the account after the server validates the
-session.
+this page. Signed-in customers can view their account's booking history; the server scopes history
+to the validated account session. Signed-in booking requests are attached to the account after the
+server validates the session.
 
 Set `BOOKING_API_URL` in the Vercel project to the API's HTTPS origin and deploy. Configure
 `ALLOWED_ORIGINS` and `ACCOUNT_VERIFICATION_URL` in the API service using this site's deployed
