@@ -364,12 +364,29 @@ form?.addEventListener("submit", async (event) => {
     }
   }
 
+  function generateUUID() {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0;
+      var v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
+  const bookingUuid = generateUUID();
+  const bookingId = "AE-" + bookingUuid.substring(0, 8).toUpperCase();
+
   const bookingRecord = {
+    id: bookingUuid,
     user_id: currentUser?.id || null,
     customer_name: customerName,
     email: email,
     phone: phone,
     notes: notes,
+    date: activityDateInput?.value || checkInDateInput?.value || new Date().toISOString().split("T")[0],
+    time: activityTimeInput?.value || "10:00",
     activity_ids: activityIds,
     activity_quantities: Object.fromEntries(
       activityIds.map((id) => [id, activityQuantities[id]])
@@ -389,27 +406,18 @@ form?.addEventListener("submit", async (event) => {
     created_at: new Date().toISOString()
   };
 
-  let bookingId = "";
   if (supabase) {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("bookings")
-        .insert([bookingRecord])
-        .select("id")
-        .single();
+        .insert([bookingRecord]);
 
-      if (!error && data?.id) {
-        bookingId = data.id;
-      } else if (error) {
+      if (error) {
         console.warn("Supabase booking insert notice:", error.message);
       }
     } catch (dbErr) {
       console.warn("Supabase booking insert error:", dbErr);
     }
-  }
-
-  if (!bookingId) {
-    bookingId = "AE-" + Math.random().toString(36).substring(2, 9).toUpperCase();
   }
 
   // Email notification via EmailJS

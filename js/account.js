@@ -104,7 +104,9 @@ async function loadAccountBookings(user) {
   }
 
   try {
-    const filter = user.id ? `user_id.eq.${user.id},email.eq.${user.email}` : `email.eq.${user.email}`;
+    const filter = user.id
+      ? `user_id.eq.${user.id},email.ilike.${user.email}`
+      : `email.ilike.${user.email}`;
     const { data, error } = await supabase
       .from("bookings")
       .select("*")
