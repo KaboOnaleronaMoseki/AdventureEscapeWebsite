@@ -5,10 +5,9 @@ window.ADVENTURE_CONFIG = {
     anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZidW9mY2l4c3BzdW5lbHBhamh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM3NTMzMDcsImV4cCI6MjEwOTMyOTMwN30.GvN5Z-SA90uj6b_U1bSgAuYKKvPB8x_vD_oRO7ET8Yk"
   },
   emailjs: {
-    // Replace these three values with your EmailJS credentials:
-    serviceId: "YOUR_SERVICE_ID",
-    templateId: "YOUR_TEMPLATE_ID",
-    publicKey: "YOUR_PUBLIC_KEY",
+    serviceId: "service_uz05v8s",
+    templateId: "template_0awhcvu",
+    publicKey: "wL4SZdb5JMNVwvwsU",
     recipientEmail: "Kaboonalerona7@gmail.com"
   }
 };
