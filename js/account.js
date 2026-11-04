@@ -68,7 +68,7 @@ function setMode(nextMode) {
     : "New here? Create an account";
   if (noteEl) {
     noteEl.textContent = registering
-      ? "Your account is stored securely on our server. Email verification is required before you can sign in."
+      ? "Your name, email, and optional phone are stored securely and shared with our account team. Your password is hashed and never emailed. Email verification is required before you can sign in."
       : "";
   }
   setMessage("");
